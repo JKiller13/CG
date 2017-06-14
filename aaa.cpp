@@ -29,9 +29,6 @@ GLint    wScreen=600, hScreen=500;
 GLfloat cube=3.0;
 GLfloat buleP[]= {0, 0, 0};
 																
-GLfloat quad=3.0;
-GLfloat quadP[]= { 3, -10, 0};
-
 //------------------------------------------------------------ Observador
 GLfloat  rVisao=4*cube, aVisao=0.5*PI;
 GLfloat  obsP[] ={rVisao*cos(aVisao),rVisao*cos(aVisao), rVisao*sin(aVisao)};
@@ -180,29 +177,6 @@ void drawScene(){
 	glColor4f(LARANJA);
 	glutSolidCube(cube);
 	glPopMatrix();
-
-	//Quadrado
-	glTranslatef(quadP[0], quadP[1], quadP[2]); 
-	glColor4f(LARANJA);
-	glBegin(GL_QUADS);
-		glVertex3f( 0, 0, 0); 
-		glVertex3f(quad, 0, 0); 
-		glVertex3f(quad, quad, 0); 
-		glVertex3f(0, quad, 0);
-	glEnd();
-
-	//2 Quadrado
-	glTranslatef(quadP[0], quadP[1] + 5, quadP[2]); 
-	glColor4f(VERMELHO);
-	glBegin(GL_QUADS);
-		glVertex3f( 0, 0, 0); 
-		glVertex3f(5, 0, 0); 
-		glVertex3f(5, 5, 0); 
-		glVertex3f(0, 5, 0);
-	glEnd();
-
-
-
 
 }
 
