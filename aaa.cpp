@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
+#include "square.hpp"
 
 
 #ifdef __APPLE__
@@ -29,7 +30,13 @@ GLint    wScreen=600, hScreen=500;
 GLfloat cube=3.0;
 GLfloat buleP[]= {0, 0, 0};
 
-GLfloat posCubes = 5*cube;
+GLfloat draw_interval = 1000;
+
+//small cubes
+Square square;
+GLfloat posC[]= {0, 0, 0};
+GLfloat posCubes = 6*cube;
+int cubeside =0;
 
 //------------------------------------------------------------ Observador
 GLfloat  rVisao=4*cube, aVisao=0.5*PI;
@@ -91,28 +98,24 @@ GLfloat getSide(){
 }
 
 
-void newCube(){
-
-	glPushMatrix();
-	glTranslatef(posCubes,posCubes,0);
-	randomColor(random(0, 7));
-	glutSolidCube(cube);
-	glPopMatrix();
+void newCube(){//pos random de novo cubo
 
 	GLfloat lado = random(0, 6);
-	GLfloat posC[]= {0, 0, 0};
 	if(lado < 3){
 		if(lado<1){
+			cubeside = 1;
 			posC[0] = posCubes;
 			posC[1] = getSide();
 			posC[2] = getSide();
 		}
 		else if (lado<2){
+			cubeside = 3;
 			posC[1] = posCubes;
 			posC[0] = getSide();
 			posC[2] = getSide();
 		}
 		else{
+			cubeside = 2;
 			posC[2] = posCubes;
 			posC[1] = getSide();
 			posC[0] = getSide();
@@ -120,28 +123,28 @@ void newCube(){
 	}
 	else{
 		if(lado<1){
+			cubeside = 4;
 			posC[0] = -posCubes;
 			posC[1] = getSide();
 			posC[2] = getSide();
 		}
 		else if (lado<2){
+			cubeside = 6;
 			posC[1] = -posCubes;
 			posC[0] = getSide();
 			posC[2] = getSide();
 		}
 		else{
+			cubeside = 5;
 			posC[2] = -posCubes;
 			posC[1] = getSide();
 			posC[0] = getSide();
 		}
 	}
-
-	glPushMatrix();
-	glTranslatef(posC[0],posC[1],posC[2]);
-	glColor4f(AMARELO);
-	glutSolidCube(cube);
-	glPopMatrix();
-
+	square.cubeside = lado;
+	square.x = posC[0];
+	square.y = posC[1];
+	square.z = posC[2];
 }
 
 
@@ -282,6 +285,18 @@ void drawScene(){
 	glPopMatrix();
 
 }
+void update(){
+	square.move();
+}
+
+void timer(int) {
+  update();
+  glutPostRedisplay();
+  glutTimerFunc(draw_interval, timer, 0);
+}
+
+
+
 
 void display(void){
 	
@@ -294,7 +309,8 @@ void display(void){
 	glLoadIdentity();
 	gluLookAt(obsP[0], obsP[1], obsP[2], 0,0,0, 0,1,0);
 	drawScene();
-	newCube();
+	if(square.onAir == false)newCube();
+	square.draw();
 	glutSwapBuffers();
 
 }
@@ -388,6 +404,8 @@ int main(int argc, char** argv){
 	glutReshapeFunc(resize);
 	glutDisplayFunc(display); 
 	glutKeyboardFunc(keyboard);
+	glutTimerFunc(draw_interval, timer, 0);
+
 	glutMainLoop();
 	
 	return 0;
