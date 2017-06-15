@@ -30,7 +30,7 @@ GLint    wScreen=600, hScreen=500;
 GLfloat cube=3.0;
 GLfloat buleP[]= {0, 0, 0};
 
-GLfloat draw_interval = 1000;
+GLfloat draw_interval = 500;
 
 //small cubes
 Square square;
@@ -99,10 +99,12 @@ GLfloat getSide(){
 
 
 void newCube(){//pos random de novo cubo
-
+	//GLfloat lado = 3.9;
 	GLfloat lado = random(0, 6);
+	printf("lado %f\n", lado);
 	if(lado < 3){
 		if(lado<1){
+
 			cubeside = 1;
 			posC[0] = posCubes;
 			posC[1] = getSide();
@@ -122,13 +124,13 @@ void newCube(){//pos random de novo cubo
 		}
 	}
 	else{
-		if(lado<1){
+		if(lado<4){
 			cubeside = 4;
 			posC[0] = -posCubes;
 			posC[1] = getSide();
 			posC[2] = getSide();
 		}
-		else if (lado<2){
+		else if (lado<5){
 			cubeside = 6;
 			posC[1] = -posCubes;
 			posC[0] = getSide();
@@ -284,6 +286,29 @@ void drawScene(){
 	glutSolidCube(cube);
 	glPopMatrix();
 
+	glPushMatrix();
+	glColor4f(LARANJA);
+	glTranslatef(0, 0, -100);
+	glBegin(GL_QUADS);
+  		glVertex3f(-50, 0, -50);
+ 		glVertex3f(-50, 0, 50);
+	  	glVertex3f(50, 0, 50);
+  		glVertex3f(50, 0, -50);
+  	glEnd();
+	glPopMatrix();
+
+	glPushMatrix();
+	glColor4f(AZUL);
+	glTranslatef(0, 0, -100);
+	glBegin(GL_QUADS);
+  		glVertex3f(-50, -50, 0);
+ 		glVertex3f(-50, 50, 0);
+	  	glVertex3f(50, 50, 0);
+  		glVertex3f(50,-50, 0);
+  	glEnd();
+	glPopMatrix();
+
+		
 }
 void update(){
 	square.move();
