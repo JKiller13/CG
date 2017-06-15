@@ -28,7 +28,9 @@ GLint    wScreen=600, hScreen=500;
 
 GLfloat cube=3.0;
 GLfloat buleP[]= {0, 0, 0};
-																
+
+GLfloat posCubes = 5*cube;
+
 //------------------------------------------------------------ Observador
 GLfloat  rVisao=4*cube, aVisao=0.5*PI;
 GLfloat  obsP[] ={rVisao*cos(aVisao),rVisao*cos(aVisao), rVisao*sin(aVisao)};
@@ -36,33 +38,134 @@ GLfloat  obsP[] ={rVisao*cos(aVisao),rVisao*cos(aVisao), rVisao*sin(aVisao)};
 GLfloat  angZoom=90;
 GLfloat  incZoom=3;
 
+GLfloat random(GLfloat minimo, GLfloat maximo){	
+	GLfloat y;
+	y = rand()%1000;
+	return (minimo+ 0.001*y*(maximo-minimo));
+}
+
+
 void desenhaTexto(char *string) {
 	glRasterPos2f(-20, 35);
 	while (*string)
 		glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, *string++);
 }
 
+
+void randomColor(GLfloat color){
+
+	if(color < 1){
+		glColor4f(AZUL);
+	}
+	else if(color < 2){
+		glColor4f(VERMELHO);
+	}
+	else if(color < 3){
+		glColor4f(AMARELO);
+	}
+	else if(color < 4){
+		glColor4f(VERDE);
+	}
+	else if(color < 5){
+		glColor4f(LARANJA);
+	}
+	else if(color < 6){
+		glColor4f(BLACK);
+	}
+	else if(color < 7){
+		glColor4f(GRAY);
+	}
+}
+
+
+
+GLfloat getSide(){
+	GLfloat side = random(0, 3);
+	if(side < 1)
+		return -cube;
+	else if(side< 2)
+		return 0;
+	else
+		return cube;
+
+}
+
+
+void newCube(){
+
+	glPushMatrix();
+	glTranslatef(posCubes,posCubes,0);
+	randomColor(random(0, 7));
+	glutSolidCube(cube);
+	glPopMatrix();
+
+	GLfloat lado = random(0, 6);
+	GLfloat posC[]= {0, 0, 0};
+	if(lado < 3){
+		if(lado<1){
+			posC[0] = posCubes;
+			posC[1] = getSide();
+			posC[2] = getSide();
+		}
+		else if (lado<2){
+			posC[1] = posCubes;
+			posC[0] = getSide();
+			posC[2] = getSide();
+		}
+		else{
+			posC[2] = posCubes;
+			posC[1] = getSide();
+			posC[0] = getSide();
+		}
+	}
+	else{
+		if(lado<1){
+			posC[0] = -posCubes;
+			posC[1] = getSide();
+			posC[2] = getSide();
+		}
+		else if (lado<2){
+			posC[1] = -posCubes;
+			posC[0] = getSide();
+			posC[2] = getSide();
+		}
+		else{
+			posC[2] = -posCubes;
+			posC[1] = getSide();
+			posC[0] = getSide();
+		}
+	}
+
+	glPushMatrix();
+	glTranslatef(posC[0],posC[1],posC[2]);
+	glColor4f(AMARELO);
+	glutSolidCube(cube);
+	glPopMatrix();
+
+}
+
+
 void drawScene(){
 	
 	//Eixo dos zz
 	glColor4f(AZUL);
 	glBegin(GL_LINES);						
-		glVertex3i(0,0,-xC); 
-		glVertex3i(0,0, xC); 		
+	glVertex3i(0,0,-xC); 
+	glVertex3i(0,0, xC); 		
 	glEnd();
 
     //Eixo dos yy
 	glColor4f(VERDE);
 	glBegin(GL_LINES);						
-		glVertex3i(0,-xC,0); 
-		glVertex3i(0,xC,0); 		
+	glVertex3i(0,-xC,0); 
+	glVertex3i(0,xC,0); 		
 	glEnd();
 	
 	//Eixo dos xx
 	glColor4f(VERMELHO);
 	glBegin(GL_LINES);						
-		glVertex3i(-xC,0,0); 
-		glVertex3i( xC,0,0); 		
+	glVertex3i(-xC,0,0); 
+	glVertex3i( xC,0,0); 		
 	glEnd();
 	
 	//CUBE
@@ -180,7 +283,6 @@ void drawScene(){
 
 }
 
-
 void display(void){
 	
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
@@ -192,7 +294,7 @@ void display(void){
 	glLoadIdentity();
 	gluLookAt(obsP[0], obsP[1], obsP[2], 0,0,0, 0,1,0);
 	drawScene();
-
+	newCube();
 	glutSwapBuffers();
 
 }
@@ -209,7 +311,7 @@ void init(void) {
 	glClearColor(WHITE);
 	glShadeModel(GL_SMOOTH);
 	glEnable(GL_DEPTH_TEST);
-		
+
 	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
 	srand(1);
 }
@@ -219,16 +321,16 @@ void keyboard(unsigned char key, int x, int y){
 	
 	switch (key) {
 	//--------------------------- Zoom
-	case 'z':
-	case 'Z':
+		case 'z':
+		case 'Z':
 		angZoom=angZoom+incZoom;
 		if (angZoom>150)
 			angZoom=150;
 		glutPostRedisplay();
 		break;
 	//--------------------------- Zoom
-	case 'a':
-	case 'A':
+		case 'a':
+		case 'A':
 		angZoom=angZoom-incZoom;
 		if (angZoom<10)
 			angZoom=10;
@@ -237,10 +339,10 @@ void keyboard(unsigned char key, int x, int y){
 
 
 	//--------------------------- Escape
-	case 27:
+		case 27:
 		exit(0);
 		break;	
-  }
+	}
 
 }
 
@@ -286,7 +388,6 @@ int main(int argc, char** argv){
 	glutReshapeFunc(resize);
 	glutDisplayFunc(display); 
 	glutKeyboardFunc(keyboard);
-	
 	glutMainLoop();
 	
 	return 0;
