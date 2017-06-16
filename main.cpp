@@ -1,8 +1,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
-#include <vector>
 #include "render.hpp"
+#include "square.hpp"
 
 #ifdef __APPLE__
 #include <OpenGL/OpenGL.h>
@@ -29,13 +29,28 @@ GLint    wScreen=600, hScreen=500;
 
 GLfloat cube=3.0;
 GLfloat buleP[]= {0, 0, 0};
-															
+
+
+GLfloat draw_interval = 200;
+
+//small cubes
+
+
+Square allsquares[100];
+Square square;
+
+int nsquares=0;
+GLfloat posC[]= {0, 0, 0};
+GLfloat posCubes = 6*cube;
+int cubeside =0;
+
 //------------------------------------------------------------ Observador
 GLfloat  rVisao=4*cube, aVisao=0.5*PI;
 GLfloat  obsP[] ={rVisao*cos(aVisao),rVisao*cos(aVisao), rVisao*sin(aVisao)};
 
 GLfloat  angZoom=90;
 GLfloat  incZoom=3;
+
 
 //------------------------------------------------------------ Lights
 GLfloat lightPos[4];
@@ -51,32 +66,129 @@ Render render;
 bool night = false;
 bool fog = false;
 
+void insertSquare() {
+	allsquares[nsquares-1] = square;
+	nsquares++;
+}
+
+GLfloat random(GLfloat minimo, GLfloat maximo){	
+	GLfloat y;
+	y = rand()%1000;
+	return (minimo+ 0.001*y*(maximo-minimo));
+}
+
 void desenhaTexto(char *string) {
 	glRasterPos2f(-20, 35);
 	while (*string)
 		glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, *string++);
 }
 
+
+/*glColor4f randomColor(GLfloat color){
+
+	if(color < 1){
+		return AZUL;
+	}
+	else if(color < 2){
+		return VERMELHO;
+	}
+	else if(color < 3){
+		return AMARELO;
+	}
+	else if(color < 4){
+		return VERDE;
+	}
+	else if(color < 5){
+		return LARANJA;
+	}
+	else if(color < 6){
+		return GRAY;
+	}
+}
+*/
+
+GLfloat getSide(){
+	GLfloat side = random(0, 3);
+	if(side < 1)
+		return -cube;
+	else if(side < 2)
+		return 0;
+	else
+		return cube;
+
+}
+
+void newSquare(){//pos random de novo cubo
+	//GLfloat lado = 3.9;
+	GLfloat lado = random(0, 6);
+	printf("lado %f\n", lado);
+	if(lado < 3){
+		if(lado<1){
+			cubeside = 1;
+			posC[0] = posCubes;
+			posC[1] = getSide();
+			posC[2] = getSide();
+		}
+		else if (lado<2){
+			cubeside = 3;
+			posC[1] = posCubes;
+			posC[0] = getSide();
+			posC[2] = getSide();
+		}
+		else{
+			cubeside = 2;
+			posC[2] = posCubes;
+			posC[1] = getSide();
+			posC[0] = getSide();
+		}
+	}
+	else{
+		if(lado<4){
+			cubeside = 4;
+			posC[0] = -posCubes;
+			posC[1] = getSide();
+			posC[2] = getSide();
+		}
+		else if (lado<5){
+			cubeside = 6;
+			posC[1] = -posCubes;
+			posC[0] = getSide();
+			posC[2] = getSide();
+		}
+		else{
+			cubeside = 5;
+			posC[2] = -posCubes;
+			posC[1] = getSide();
+			posC[0] = getSide();
+		}
+	}
+	//square.color = randomColor();
+	square.cubeside = lado;
+	square.x = posC[0];
+	square.y = posC[1];
+	square.z = posC[2];
+}
+
 void drawScene(){
 	//Eixo dos zz
 	glColor4f(AZUL);
 	glBegin(GL_LINES);						
-		glVertex3i(0,0,-xC); 
-		glVertex3i(0,0, xC); 		
+	glVertex3i(0,0,-xC); 
+	glVertex3i(0,0, xC); 		
 	glEnd();
 
     //Eixo dos yy
 	glColor4f(VERDE);
 	glBegin(GL_LINES);						
-		glVertex3i(0,-xC,0); 
-		glVertex3i(0,xC,0); 		
+	glVertex3i(0,-xC,0); 
+	glVertex3i(0,xC,0); 		
 	glEnd();
 	
 	//Eixo dos xx
 	glColor4f(VERMELHO);
 	glBegin(GL_LINES);						
-		glVertex3i(-xC,0,0); 
-		glVertex3i( xC,0,0); 		
+	glVertex3i(-xC,0,0); 
+	glVertex3i( xC,0,0); 		
 	glEnd();
 	
 	//CUBE
@@ -193,6 +305,17 @@ void drawScene(){
 	glPopMatrix();
 }
 
+void update(){
+	square.move();
+	printf("move to %f %f %f\n",square.x, square.y, square.z );
+}
+
+void timer(int) {
+  update();
+  glutPostRedisplay();
+  glutTimerFunc(draw_interval, timer, 0);
+}
+
 
 void display(void){
 	
@@ -208,7 +331,22 @@ void display(void){
 	glEnable(GL_LIGHTING);
 	glEnable(GL_COLOR_MATERIAL);
 	render.drawSkybox(100);
-	//drawScene();
+	drawScene();
+	if(nsquares == 0 ){
+		newSquare();
+		nsquares++;
+	}
+	else if(square.onAir == false){
+		insertSquare();
+		newSquare();	
+	}
+	if(nsquares != 0 ){
+		for(int i = 0; i < nsquares-1;i++){
+			allsquares[i].draw();
+		}
+	}
+	
+	square.draw();
 	glutSwapBuffers();
 
 }
@@ -266,16 +404,16 @@ void keyboard(unsigned char key, int x, int y){
 	
 	switch (key) {
 	//--------------------------- Zoom
-	case 'z':
-	case 'Z':
+		case 'z':
+		case 'Z':
 		angZoom=angZoom+incZoom;
 		if (angZoom>150)
 			angZoom=150;
 		glutPostRedisplay();
 		break;
 	//--------------------------- Zoom
-	case 'a':
-	case 'A':
+		case 'a':
+		case 'A':
 		angZoom=angZoom-incZoom;
 		if (angZoom<10)
 			angZoom=10;
@@ -284,10 +422,10 @@ void keyboard(unsigned char key, int x, int y){
 
 
 	//--------------------------- Escape
-	case 27:
+		case 27:
 		exit(0);
 		break;	
-  }
+	}
 
 }
 
@@ -330,6 +468,7 @@ int main(int argc, char** argv){
 	glutReshapeFunc(resize);
 	glutDisplayFunc(display); 
 	glutKeyboardFunc(keyboard);
+	glutTimerFunc(draw_interval, timer, 0);
 	glutMainLoop();
 	
 	return 0;
