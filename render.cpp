@@ -5,71 +5,65 @@ Render::Render(){}
 Render::~Render(){}
 
 void Render::drawSkybox(int d){
+  d/=2;
   glEnable(GL_TEXTURE_2D);
-  glEnable(GL_LIGHTING);
   glPushMatrix();
-  glBindTexture(GL_TEXTURE_2D,skyboxtex[1]); //back
+  glBindTexture(GL_TEXTURE_2D,skyboxtex[3]); //right
   glColor3f(1.0,1.0,1.0);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-  glBegin(GL_POLYGON);
-  glTexCoord2f(1.0f,0.0f);  glVertex3f(-d, -d, -d); 
-  glTexCoord2f(0.0f,0.0f);  glVertex3f(-d, -d, d); 
-  glTexCoord2f(0.0f,1.0f);  glVertex3f(-d, d, d); 
-  glTexCoord2f(1.0f,1.0f);  glVertex3f(-d, d, -d); 
-  glEnd();
-  
-  glDisable(GL_TEXTURE_2D);
-  glEnable(GL_TEXTURE_2D);  
-  glBindTexture(GL_TEXTURE_2D,skyboxtex[2]); //up
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-  glBegin(GL_POLYGON);
-  glTexCoord2f(0.0,0.0);glVertex3f(d, d, -d);
-  glTexCoord2f(1.0,0.0);glVertex3f(d, d, d);
-  glTexCoord2f(1.0,1.0);glVertex3f(-d, d, d);
-  glTexCoord2f(0.0,1.0);glVertex3f(-d, d, -d);
+  glBegin(GL_QUADS);
+  glTexCoord2f(0.0f,0.0f);glVertex3f(-d, -d, -d);
+  glTexCoord2f(1.0f,0.0f);glVertex3f(d, -d, -d);
+  glTexCoord2f(1.0f,1.0f);glVertex3f(d, d, -d);
+  glTexCoord2f(0.0f,1.0f);glVertex3f(-d, d, -d);
   glEnd();
 
-  glDisable(GL_TEXTURE_2D);
-  glEnable(GL_TEXTURE_2D);  
   glBindTexture(GL_TEXTURE_2D,skyboxtex[4]); //front
+  glColor3f(1.0,1.0,1.0);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-  glBegin(GL_POLYGON);
+  glBegin(GL_QUADS);
   glTexCoord2f(0.0f,0.0f);  glVertex3f(d, -d, -d);
   glTexCoord2f(1.0f,0.0f);  glVertex3f(d, -d, d);
   glTexCoord2f(1.0f,1.0f);  glVertex3f(d, d, d);
   glTexCoord2f(0.0f,1.0f);  glVertex3f(d, d, -d);
   glEnd();
   
-  glDisable(GL_TEXTURE_2D);
-  glEnable(GL_TEXTURE_2D);
-  glBindTexture(GL_TEXTURE_2D,skyboxtex[3]); //right
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-  glBegin(GL_POLYGON);
-  glTexCoord2f(1.0f,0.0f);glVertex3f(d, -d, -d);
-  glTexCoord2f(1.0f,1.0f);glVertex3f(d, d, -d);
-  glTexCoord2f(0.0f,1.0f);glVertex3f(-d, d, -d);
-  glTexCoord2f(0.0f,0.0f);glVertex3f(-d, -d, -d);
-  glEnd();
-  glBindTexture(GL_TEXTURE_2D, 0);
-
-  glDisable(GL_TEXTURE_2D);
-  glEnable(GL_TEXTURE_2D);
   glBindTexture(GL_TEXTURE_2D,skyboxtex[0]); //left
+  glColor3f(1.0,1.0,1.0);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-  glBegin(GL_POLYGON);
+  glBegin(GL_QUADS);
   glTexCoord2f(0.0f,0.0f);glVertex3f(d, -d, d);
-  glTexCoord2f(0.0f,1.0f);glVertex3f(d, d, d);
-  glTexCoord2f(1.0f,1.0f);glVertex3f(-d, d, d);
   glTexCoord2f(1.0f,0.0f);glVertex3f(-d, -d, d);
+  glTexCoord2f(1.0f,1.0f);glVertex3f(-d, d, d);
+  glTexCoord2f(0.0f,1.0f);glVertex3f(d, d, d);
   glEnd();
-  glDisable(GL_TEXTURE_2D);
   
+  glBindTexture(GL_TEXTURE_2D,skyboxtex[1]); //back
+  glColor3f(1.0,1.0,1.0);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+  glBegin(GL_QUADS);
+  glTexCoord2f(0.0f,0.0f);  glVertex3f(-d, -d, d); 
+  glTexCoord2f(1.0f,0.0f);  glVertex3f(-d, -d, -d); 
+  glTexCoord2f(1.0f,1.0f);  glVertex3f(-d, d, -d); 
+  glTexCoord2f(0.0f,1.0f);  glVertex3f(-d, d, d); 
+  glEnd();
+    
+  glBindTexture(GL_TEXTURE_2D,skyboxtex[2]); //up
+  glColor3f(1.0,1.0,1.0);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+  glBegin(GL_QUADS);
+  glTexCoord2f(0.0,0.0);glVertex3f(d, d, -d);
+  glTexCoord2f(1.0,0.0);glVertex3f(d, d, d);
+  glTexCoord2f(1.0,1.0);glVertex3f(-d, d, d);
+  glTexCoord2f(0.0,1.0);glVertex3f(-d, d, -d);
+  glEnd();
   glPopMatrix();
+  glDisable(GL_TEXTURE_2D);
 }
 
 void Render::loadAllTextures(){
