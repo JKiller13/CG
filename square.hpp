@@ -29,6 +29,7 @@ public:
   GLfloat x = 15, y = 0, z = 0;
   GLfloat color;
   GLfloat cubeside = 0;
+  GLfloat faceside = 0;
   void move();
   void update();
   void draw();

@@ -33,6 +33,8 @@ GLfloat buleP[]= {0, 0, 0};
 
 GLfloat draw_interval = 200;
 
+GLfloat sizeprincipal[6][6]= {1.5*cube};
+
 //small cubes
 
 
@@ -170,6 +172,98 @@ void newSquare(){//pos random de novo cubo
 }
 
 void drawScene(){
+
+		//Eixo dos zz
+	glColor4f(AZUL);
+	glBegin(GL_LINES);						
+	glVertex3i(0,0,-xC); 
+	glVertex3i(0,0, xC); 		
+	glEnd();
+
+    //Eixo dos yy
+	glColor4f(VERDE);
+	glBegin(GL_LINES);						
+	glVertex3i(0,-xC,0); 
+	glVertex3i(0,xC,0); 		
+	glEnd();
+	
+	//Eixo dos xx
+	glColor4f(VERMELHO);
+	glBegin(GL_LINES);						
+	glVertex3i(-xC,0,0); 
+	glVertex3i( xC,0,0); 		
+	glEnd();
+
+	glPushMatrix();
+	glColor4f(LARANJA);
+	glTranslatef(0,-1.5*cube, 0);
+	glBegin(GL_QUADS);
+  		glVertex3f(-1.5*cube, 0, -1.5*cube);
+ 		glVertex3f(-1.5*cube, 0, 1.5*cube);
+	  	glVertex3f(1.5*cube, 0, 1.5*cube);
+  		glVertex3f(1.5*cube, 0, -1.5*cube);
+  	glEnd();
+	glPopMatrix();
+
+	glPushMatrix();
+	glColor4f(VERDE);
+	glTranslatef(0,1.5*cube, 0);
+	glBegin(GL_QUADS);
+  		glVertex3f(-1.5*cube, 0, -1.5*cube);
+ 		glVertex3f(-1.5*cube, 0, 1.5*cube);
+	  	glVertex3f(1.5*cube, 0, 1.5*cube);
+  		glVertex3f(1.5*cube, 0, -1.5*cube);
+  	glEnd();
+	glPopMatrix();
+
+	glPushMatrix();
+	glColor4f(AZUL);
+	glTranslatef(0,0,1.5*cube);
+	glBegin(GL_QUADS);
+  		glVertex3f(-1.5*cube, -1.5*cube, 0);
+ 		glVertex3f(-1.5*cube, 1.5*cube, 0);
+	  	glVertex3f(1.5*cube, 1.5*cube, 0);
+  		glVertex3f(1.5*cube, -1.5*cube, 0);
+  	glEnd();
+	glPopMatrix();
+
+	glPushMatrix();
+	glColor4f(AMARELO);
+	glTranslatef(0,0,-1.5*cube);
+	glBegin(GL_QUADS);
+  		glVertex3f(-1.5*cube, -1.5*cube, 0);
+ 		glVertex3f(-1.5*cube, 1.5*cube, 0);
+	  	glVertex3f(1.5*cube, 1.5*cube, 0);
+  		glVertex3f(1.5*cube, -1.5*cube, 0);
+  	glEnd();
+	glPopMatrix();
+
+	glPushMatrix();
+	glColor4f(AZUL);
+	glTranslatef(1.5*cube,0,0);
+	glBegin(GL_QUADS);
+  		glVertex3f(0, -1.5*cube, -1.5*cube);
+ 		glVertex3f(0,-1.5*cube, 1.5*cube);
+	  	glVertex3f(0, 1.5*cube, 1.5*cube);
+  		glVertex3f(0, 1.5*cube, -1.5*cube); 
+  	glEnd();
+	glPopMatrix();
+
+	glPushMatrix();
+	glColor4f(AMARELO);
+	glTranslatef(-1.5*cube, 0, 0);
+	glBegin(GL_QUADS);
+  		glVertex3f(0, -1.5*cube, -1.5*cube);
+ 		glVertex3f(0, -1.5*cube, 1.5*cube);
+	  	glVertex3f(0, 1.5*cube, 1.5*cube);
+  		glVertex3f(0, 1.5*cube, -1.5*cube);
+  	glEnd();
+	glPopMatrix();
+
+}
+
+
+void drawScene1(){
 	//Eixo dos zz
 	glColor4f(AZUL);
 	glBegin(GL_LINES);						
@@ -306,6 +400,7 @@ void drawScene(){
 }
 
 void update(){
+
 	square.move();
 	printf("move to %f %f %f\n",square.x, square.y, square.z );
 }
