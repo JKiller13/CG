@@ -171,233 +171,7 @@ void newSquare(){//pos random de novo cubo
 	square.z = posC[2];
 }
 
-void drawScene(){
 
-		//Eixo dos zz
-	glColor4f(AZUL);
-	glBegin(GL_LINES);						
-	glVertex3i(0,0,-xC); 
-	glVertex3i(0,0, xC); 		
-	glEnd();
-
-    //Eixo dos yy
-	glColor4f(VERDE);
-	glBegin(GL_LINES);						
-	glVertex3i(0,-xC,0); 
-	glVertex3i(0,xC,0); 		
-	glEnd();
-	
-	//Eixo dos xx
-	glColor4f(VERMELHO);
-	glBegin(GL_LINES);						
-	glVertex3i(-xC,0,0); 
-	glVertex3i( xC,0,0); 		
-	glEnd();
-
-	glPushMatrix();
-	glColor4f(LARANJA);
-	glTranslatef(0,-1.5*cube, 0);
-	glBegin(GL_QUADS);
-  		glVertex3f(-1.5*cube, 0, -1.5*cube);
- 		glVertex3f(-1.5*cube, 0, 1.5*cube);
-	  	glVertex3f(1.5*cube, 0, 1.5*cube);
-  		glVertex3f(1.5*cube, 0, -1.5*cube);
-  	glEnd();
-	glPopMatrix();
-
-	glPushMatrix();
-	glColor4f(VERDE);
-	glTranslatef(0,1.5*cube, 0);
-	glBegin(GL_QUADS);
-  		glVertex3f(-1.5*cube, 0, -1.5*cube);
- 		glVertex3f(-1.5*cube, 0, 1.5*cube);
-	  	glVertex3f(1.5*cube, 0, 1.5*cube);
-  		glVertex3f(1.5*cube, 0, -1.5*cube);
-  	glEnd();
-	glPopMatrix();
-
-	glPushMatrix();
-	glColor4f(AZUL);
-	glTranslatef(0,0,1.5*cube);
-	glBegin(GL_QUADS);
-  		glVertex3f(-1.5*cube, -1.5*cube, 0);
- 		glVertex3f(-1.5*cube, 1.5*cube, 0);
-	  	glVertex3f(1.5*cube, 1.5*cube, 0);
-  		glVertex3f(1.5*cube, -1.5*cube, 0);
-  	glEnd();
-	glPopMatrix();
-
-	glPushMatrix();
-	glColor4f(AMARELO);
-	glTranslatef(0,0,-1.5*cube);
-	glBegin(GL_QUADS);
-  		glVertex3f(-1.5*cube, -1.5*cube, 0);
- 		glVertex3f(-1.5*cube, 1.5*cube, 0);
-	  	glVertex3f(1.5*cube, 1.5*cube, 0);
-  		glVertex3f(1.5*cube, -1.5*cube, 0);
-  	glEnd();
-	glPopMatrix();
-
-	glPushMatrix();
-	glColor4f(AZUL);
-	glTranslatef(1.5*cube,0,0);
-	glBegin(GL_QUADS);
-  		glVertex3f(0, -1.5*cube, -1.5*cube);
- 		glVertex3f(0,-1.5*cube, 1.5*cube);
-	  	glVertex3f(0, 1.5*cube, 1.5*cube);
-  		glVertex3f(0, 1.5*cube, -1.5*cube); 
-  	glEnd();
-	glPopMatrix();
-
-	glPushMatrix();
-	glColor4f(AMARELO);
-	glTranslatef(-1.5*cube, 0, 0);
-	glBegin(GL_QUADS);
-  		glVertex3f(0, -1.5*cube, -1.5*cube);
- 		glVertex3f(0, -1.5*cube, 1.5*cube);
-	  	glVertex3f(0, 1.5*cube, 1.5*cube);
-  		glVertex3f(0, 1.5*cube, -1.5*cube);
-  	glEnd();
-	glPopMatrix();
-
-}
-
-
-void drawScene1(){
-	//Eixo dos zz
-	glColor4f(AZUL);
-	glBegin(GL_LINES);						
-	glVertex3i(0,0,-xC); 
-	glVertex3i(0,0, xC); 		
-	glEnd();
-
-    //Eixo dos yy
-	glColor4f(VERDE);
-	glBegin(GL_LINES);						
-	glVertex3i(0,-xC,0); 
-	glVertex3i(0,xC,0); 		
-	glEnd();
-	
-	//Eixo dos xx
-	glColor4f(VERMELHO);
-	glBegin(GL_LINES);						
-	glVertex3i(-xC,0,0); 
-	glVertex3i( xC,0,0); 		
-	glEnd();
-	
-	//CUBE
-	glPushMatrix();
-
-	glTranslatef(0,0,-cube);
-	glColor4f(AMARELO);
-	glutSolidCube(cube);
-
-	glTranslatef(0,-cube, 0); 
-	glColor4f(GRAY);
-	glutSolidCube(cube);
-
-	glTranslatef(0,2*cube, 0); 
-	glColor4f(BLACK);
-	glutSolidCube(cube);
-
-	glTranslatef(-cube, -cube, 0); 
-	glColor4f(VERDE);
-	glutSolidCube(cube);
-
-	glTranslatef(0,-cube, 0); 
-	glColor4f(LARANJA);
-	glutSolidCube(cube);
-
-	glTranslatef(0,2*cube, 0); 
-	glColor4f(AZUL);
-	glutSolidCube(cube);
-
-	glTranslatef(2*cube, -cube, 0); 
-	glColor4f(VERMELHO);
-	glutSolidCube(cube);
-
-	glTranslatef(0,-cube, 0); 
-	glColor4f(AZUL);
-	glutSolidCube(cube);
-
-	glTranslatef(0,2*cube, 0); 
-	glColor4f(LARANJA);
-	glutSolidCube(cube);
-	//2
-	glTranslatef(-cube,-2*cube,cube); 
-	glColor4f(GRAY);
-	glutSolidCube(cube);
-
-	glTranslatef(0,2*cube, 0); 
-	glColor4f(BLACK);
-	glutSolidCube(cube);
-
-	glTranslatef(-cube, -cube, 0); 
-	glColor4f(VERDE);
-	glutSolidCube(cube);
-
-	glTranslatef(0,-cube, 0); 
-	glColor4f(LARANJA);
-	glutSolidCube(cube);
-
-	glTranslatef(0,2*cube, 0); 
-	glColor4f(AZUL);
-	glutSolidCube(cube);
-
-	glTranslatef(2*cube, -cube, 0); 
-	glColor4f(VERMELHO);
-	glutSolidCube(cube);
-
-	glTranslatef(0,-cube, 0); 
-	glColor4f(AZUL);
-	glutSolidCube(cube);
-
-	glTranslatef(0,2*cube, 0); 
-	glColor4f(LARANJA);
-	glutSolidCube(cube);
-
-	glPopMatrix();
-
-	//3
-	glPushMatrix();
-
-	glTranslatef(0,0,+cube);
-	glColor4f(AMARELO);
-	glutSolidCube(cube);
-
-	glTranslatef(0,-cube, 0); 
-	glColor4f(GRAY);
-	glutSolidCube(cube);
-
-	glTranslatef(0,2*cube, 0); 
-	glColor4f(BLACK);
-	glutSolidCube(cube);
-
-	glTranslatef(-cube, -cube, 0); 
-	glColor4f(VERDE);
-	glutSolidCube(cube);
-
-	glTranslatef(0,-cube, 0); 
-	glColor4f(LARANJA);
-	glutSolidCube(cube);
-
-	glTranslatef(0,2*cube, 0); 
-	glColor4f(AZUL);
-	glutSolidCube(cube);
-
-	glTranslatef(2*cube, -cube, 0); 
-	glColor4f(VERMELHO);
-	glutSolidCube(cube);
-
-	glTranslatef(0,-cube, 0); 
-	glColor4f(AZUL);
-	glutSolidCube(cube);
-
-	glTranslatef(0,2*cube, 0); 
-	glColor4f(LARANJA);
-	glutSolidCube(cube);
-	glPopMatrix();
-}
 
 void update(){
 
@@ -426,9 +200,10 @@ void display(void){
 	glEnable(GL_LIGHTING);
 	glEnable(GL_COLOR_MATERIAL);
 	render.drawSkybox(100);
-	drawScene();
+	render.drawInitial(cube);
 	if(nsquares == 0 ){
 		newSquare();
+		square.loadTexture();
 		nsquares++;
 	}
 	else if(square.onAir == false){
@@ -449,7 +224,7 @@ void display(void){
 GLvoid resize(GLsizei width, GLsizei height) {
 	wScreen=width;
 	hScreen=height;
-	drawScene();	
+	render.drawInitial(cube);	
 }
 
 void initLights(){

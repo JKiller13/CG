@@ -9,6 +9,10 @@
 #include <GL/glut.h>
 #endif
 
+#include "RgbImage.h"
+
+using namespace std;
+
 #define AZUL     0.0, 0.0, 1.0, 1.0
 #define VERMELHO 1.0, 0.0, 0.0, 1.0
 #define AMARELO  1.0, 1.0, 0.0, 1.0
@@ -17,7 +21,7 @@
 #define WHITE    1.0, 1.0, 1.0, 1.0
 #define BLACK    0.0, 0.0, 0.0, 1.0
 #define GRAY    0.2, 0.2, 0.2, 1.0
-#define PI		 3.14159
+#define PI     3.14159
 
 
 class Square {
@@ -30,9 +34,14 @@ public:
   GLfloat color;
   GLfloat cubeside = 0;
   GLfloat faceside = 0;
+  GLuint texture;
+  RgbImage imag;
+
   void move();
   void update();
   void draw();
+  void loadTexture();
+
 };
 
 #endif

@@ -5,6 +5,19 @@ Square::Square(){}
 
 Square::~Square(){}
 
+void Square::loadTexture(){  
+  glGenTextures(1, &texture); 
+  glBindTexture(GL_TEXTURE_2D, texture); 
+  glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE); 
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR); 
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR); 
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT); 
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT); 
+  imag.LoadBmpFile("sand.bmp"); 
+  glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, (int)imag.GetNumCols(), (int)imag.GetNumRows(), 0, GL_RGB, GL_UNSIGNED_BYTE, imag.ImageData());
+}
+
+
 void Square::move(){
     if(cubeside < 1){
         x = x-0.5;
@@ -55,11 +68,15 @@ void Square::move(){
 
 
 void Square::draw(){
-  glPushMatrix();
+  glPushMatrix();  
+  glEnable(GL_TEXTURE_2D);
+  glBindTexture(GL_TEXTURE_2D, texture);
   glColor4f(LARANJA);
   glTranslatef(x,y,z);
   glutSolidCube(size);
   glPopMatrix();
+  glDisable(GL_TEXTURE_2D);
+
   onAir = true;
 }
 
