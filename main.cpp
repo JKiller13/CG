@@ -1,8 +1,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
-#include "render.hpp"
 #include "square.hpp"
+#include "render.hpp"
 
 #ifdef __APPLE__
 #include <OpenGL/OpenGL.h>
@@ -106,8 +106,8 @@ void desenhaTexto(char *string) {
 	else if(color < 6){
 		return GRAY;
 	}
-}
-*/
+}*/
+
 
 GLfloat getSide(){
 	GLfloat side = random(0, 3);
