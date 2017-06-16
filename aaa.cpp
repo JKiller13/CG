@@ -30,10 +30,15 @@ GLint    wScreen=600, hScreen=500;
 GLfloat cube=3.0;
 GLfloat buleP[]= {0, 0, 0};
 
-GLfloat draw_interval = 500;
+GLfloat draw_interval = 200;
 
 //small cubes
+
+
+Square allsquares[100];
 Square square;
+
+int nsquares=0;
 GLfloat posC[]= {0, 0, 0};
 GLfloat posCubes = 6*cube;
 int cubeside =0;
@@ -44,6 +49,13 @@ GLfloat  obsP[] ={rVisao*cos(aVisao),rVisao*cos(aVisao), rVisao*sin(aVisao)};
 
 GLfloat  angZoom=90;
 GLfloat  incZoom=3;
+
+void insertSquare() {
+	allsquares[nsquares-1] = square;
+	nsquares++;
+}
+
+
 
 GLfloat random(GLfloat minimo, GLfloat maximo){	
 	GLfloat y;
@@ -59,38 +71,35 @@ void desenhaTexto(char *string) {
 }
 
 
-void randomColor(GLfloat color){
+/*glColor4f randomColor(GLfloat color){
 
 	if(color < 1){
-		glColor4f(AZUL);
+		return AZUL;
 	}
 	else if(color < 2){
-		glColor4f(VERMELHO);
+		return VERMELHO;
 	}
 	else if(color < 3){
-		glColor4f(AMARELO);
+		return AMARELO;
 	}
 	else if(color < 4){
-		glColor4f(VERDE);
+		return VERDE;
 	}
 	else if(color < 5){
-		glColor4f(LARANJA);
+		return LARANJA;
 	}
 	else if(color < 6){
-		glColor4f(BLACK);
-	}
-	else if(color < 7){
-		glColor4f(GRAY);
+		return GRAY;
 	}
 }
-
+*/
 
 
 GLfloat getSide(){
 	GLfloat side = random(0, 3);
 	if(side < 1)
 		return -cube;
-	else if(side< 2)
+	else if(side < 2)
 		return 0;
 	else
 		return cube;
@@ -98,13 +107,12 @@ GLfloat getSide(){
 }
 
 
-void newCube(){//pos random de novo cubo
+void newSquare(){//pos random de novo cubo
 	//GLfloat lado = 3.9;
 	GLfloat lado = random(0, 6);
 	printf("lado %f\n", lado);
 	if(lado < 3){
 		if(lado<1){
-
 			cubeside = 1;
 			posC[0] = posCubes;
 			posC[1] = getSide();
@@ -143,6 +151,7 @@ void newCube(){//pos random de novo cubo
 			posC[0] = getSide();
 		}
 	}
+	//square.color = randomColor();
 	square.cubeside = lado;
 	square.x = posC[0];
 	square.y = posC[1];
@@ -285,33 +294,11 @@ void drawScene(){
 	glColor4f(LARANJA);
 	glutSolidCube(cube);
 	glPopMatrix();
-
-	glPushMatrix();
-	glColor4f(LARANJA);
-	glTranslatef(0, 0, -100);
-	glBegin(GL_QUADS);
-  		glVertex3f(-50, 0, -50);
- 		glVertex3f(-50, 0, 50);
-	  	glVertex3f(50, 0, 50);
-  		glVertex3f(50, 0, -50);
-  	glEnd();
-	glPopMatrix();
-
-	glPushMatrix();
-	glColor4f(AZUL);
-	glTranslatef(0, 0, -100);
-	glBegin(GL_QUADS);
-  		glVertex3f(-50, -50, 0);
- 		glVertex3f(-50, 50, 0);
-	  	glVertex3f(50, 50, 0);
-  		glVertex3f(50,-50, 0);
-  	glEnd();
-	glPopMatrix();
-
-		
+	
 }
 void update(){
 	square.move();
+	printf("move to %f %f %f\n",square.x, square.y, square.z );
 }
 
 void timer(int) {
@@ -334,7 +321,20 @@ void display(void){
 	glLoadIdentity();
 	gluLookAt(obsP[0], obsP[1], obsP[2], 0,0,0, 0,1,0);
 	drawScene();
-	if(square.onAir == false)newCube();
+	if(nsquares == 0 ){
+		newSquare();
+		nsquares++;
+	}
+	else if(square.onAir == false){
+		insertSquare();
+		newSquare();	
+	}
+	if(nsquares != 0 ){
+		for(int i = 0; i < nsquares-1;i++){
+			allsquares[i].draw();
+		}
+	}
+	
 	square.draw();
 	glutSwapBuffers();
 
