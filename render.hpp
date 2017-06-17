@@ -35,3 +35,4 @@ public:
   	void drawSkybox(int d);
   	void drawInitial(GLfloat cube);
 };
+

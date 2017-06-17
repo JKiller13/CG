@@ -73,10 +73,16 @@ void insertSquare() {
 	nsquares++;
 }
 
-GLfloat random(GLfloat minimo, GLfloat maximo){	
-	GLfloat y;
+int random(int minimo, int maximo){	
+	int y;
 	y = rand()%1000;
 	return (minimo+ 0.001*y*(maximo-minimo));
+}
+
+GLint randomint (GLfloat minimo, GLfloat maximo){	
+	GLfloat y;
+	y = rand()%1000;
+	return (minimo+y*(maximo-minimo));
 }
 
 void desenhaTexto(char *string) {
@@ -86,27 +92,27 @@ void desenhaTexto(char *string) {
 }
 
 
-/*glColor4f randomColor(GLfloat color){
+int randomtexture(GLfloat color){
 
 	if(color < 1){
-		return AZUL;
+		return 0;
 	}
 	else if(color < 2){
-		return VERMELHO;
+		return 1;
 	}
 	else if(color < 3){
-		return AMARELO;
+		return 2;
 	}
 	else if(color < 4){
-		return VERDE;
+		return 3;
 	}
 	else if(color < 5){
-		return LARANJA;
+		return 4;
 	}
 	else if(color < 6){
-		return GRAY;
+		return 5;
 	}
-}*/
+}
 
 
 GLfloat getSide(){
@@ -121,7 +127,7 @@ GLfloat getSide(){
 }
 
 void newSquare(){//pos random de novo cubo
-	//GLfloat lado = 3.9;
+	//GLfloat lado = 2.9;
 	GLfloat lado = random(0, 6);
 	printf("lado %f\n", lado);
 	if(lado < 3){
@@ -164,6 +170,9 @@ void newSquare(){//pos random de novo cubo
 			posC[0] = getSide();
 		}
 	}
+
+	square.textn = random(0, 6);
+	printf("ya%d\n", square.textn);
 	//square.color = randomColor();
 	square.cubeside = lado;
 	square.x = posC[0];
@@ -176,7 +185,7 @@ void newSquare(){//pos random de novo cubo
 void update(){
 
 	square.move();
-	printf("move to %f %f %f\n",square.x, square.y, square.z );
+	//printf("move to %f %f %f\n",square.x, square.y, square.z );
 }
 
 void timer(int) {
@@ -203,7 +212,6 @@ void display(void){
 	render.drawInitial(cube);
 	if(nsquares == 0 ){
 		newSquare();
-		square.loadTexture();
 		nsquares++;
 	}
 	else if(square.onAir == false){

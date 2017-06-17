@@ -5,6 +5,7 @@ Render::Render(){}
 Render::~Render(){}
 
 
+
 void Render::drawInitial(GLfloat cube){
   glEnable(GL_TEXTURE_2D);
   glBindTexture(GL_TEXTURE_2D,textures[0]);
@@ -12,9 +13,9 @@ void Render::drawInitial(GLfloat cube){
   glTranslatef(0,-1.5*cube, 0);
   glBegin(GL_QUADS);
   glTexCoord2f(0.0f,0.0f);glVertex3f(-1.5*cube, 0, -1.5*cube);
-  glTexCoord2f(10.0f,0.0f);glVertex3f(-1.5*cube, 0, 1.5*cube);
-  glTexCoord2f(10.0f,10.0f);glVertex3f(1.5*cube, 0, 1.5*cube);
-  glTexCoord2f(0.0f,10.0f);glVertex3f(1.5*cube, 0, -1.5*cube);
+  glTexCoord2f(3.0f,0.0f);glVertex3f(-1.5*cube, 0, 1.5*cube);
+  glTexCoord2f(3.0f,3.0f);glVertex3f(1.5*cube, 0, 1.5*cube);
+  glTexCoord2f(0.0f,3.0f);glVertex3f(1.5*cube, 0, -1.5*cube);
   glEnd();
   glPopMatrix();
 
@@ -23,9 +24,9 @@ void Render::drawInitial(GLfloat cube){
   glTranslatef(0,1.5*cube, 0);
   glBegin(GL_QUADS);
   glTexCoord2f(0.0f,0.0f);glVertex3f(-1.5*cube, 0, -1.5*cube);
-  glTexCoord2f(10.0f,0.0f);glVertex3f(-1.5*cube, 0, 1.5*cube);
-  glTexCoord2f(10.0f,10.0f);glVertex3f(1.5*cube, 0, 1.5*cube);
-  glTexCoord2f(0.0f,10.0f); glVertex3f(1.5*cube, 0, -1.5*cube);
+  glTexCoord2f(3.0f,0.0f);glVertex3f(-1.5*cube, 0, 1.5*cube);
+  glTexCoord2f(3.0f,3.0f);glVertex3f(1.5*cube, 0, 1.5*cube);
+  glTexCoord2f(0.0f,3.0f); glVertex3f(1.5*cube, 0, -1.5*cube);
   glEnd();
   glPopMatrix();
 
@@ -33,9 +34,9 @@ void Render::drawInitial(GLfloat cube){
   glTranslatef(0,0,1.5*cube);
   glBegin(GL_QUADS);
   glTexCoord2f(0.0f,0.0f);glVertex3f(-1.5*cube, -1.5*cube, 0);
-  glTexCoord2f(10.0f,0.0f);glVertex3f(-1.5*cube, 1.5*cube, 0);
-  glTexCoord2f(10.0f,10.0f);glVertex3f(1.5*cube, 1.5*cube, 0);
-  glTexCoord2f(0.0f,10.0f);glVertex3f(1.5*cube, -1.5*cube, 0);
+  glTexCoord2f(3.0f,0.0f);glVertex3f(-1.5*cube, 1.5*cube, 0);
+  glTexCoord2f(3.0f,3.0f);glVertex3f(1.5*cube, 1.5*cube, 0);
+  glTexCoord2f(0.0f,3.0f);glVertex3f(1.5*cube, -1.5*cube, 0);
   glEnd();
   glPopMatrix();
 
@@ -43,9 +44,9 @@ void Render::drawInitial(GLfloat cube){
   glTranslatef(0,0,-1.5*cube);
   glBegin(GL_QUADS);
   glTexCoord2f(0.0f,0.0f);glVertex3f(-1.5*cube, -1.5*cube, 0);
-  glTexCoord2f(10.0f,0.0f);glVertex3f(-1.5*cube, 1.5*cube, 0);
-  glTexCoord2f(10.0f,10.0f);glVertex3f(1.5*cube, 1.5*cube, 0);
-  glTexCoord2f(0.0f,10.0f);glVertex3f(1.5*cube, -1.5*cube, 0);
+  glTexCoord2f(3.0f,0.0f);glVertex3f(-1.5*cube, 1.5*cube, 0);
+  glTexCoord2f(3.0f,3.0f);glVertex3f(1.5*cube, 1.5*cube, 0);
+  glTexCoord2f(0.0f,3.0f);glVertex3f(1.5*cube, -1.5*cube, 0);
   glEnd();
   glPopMatrix();
 
@@ -53,9 +54,9 @@ void Render::drawInitial(GLfloat cube){
   glTranslatef(1.5*cube,0,0);
   glBegin(GL_QUADS);
   glTexCoord2f(0.0f,0.0f); glVertex3f(0, -1.5*cube, -1.5*cube);
-  glTexCoord2f(10.0f,0.0f);glVertex3f(0,-1.5*cube, 1.5*cube);
-  glTexCoord2f(10.0f,10.0f);glVertex3f(0, 1.5*cube, 1.5*cube);
-  glTexCoord2f(0.0f,10.0f);glVertex3f(0, 1.5*cube, -1.5*cube); 
+  glTexCoord2f(3.0f,0.0f);glVertex3f(0,-1.5*cube, 1.5*cube);
+  glTexCoord2f(3.0f,3.0f);glVertex3f(0, 1.5*cube, 1.5*cube);
+  glTexCoord2f(0.0f,3.0f);glVertex3f(0, 1.5*cube, -1.5*cube); 
   glEnd();
   glPopMatrix();
 
@@ -63,9 +64,9 @@ void Render::drawInitial(GLfloat cube){
   glTranslatef(-1.5*cube, 0, 0);
   glBegin(GL_QUADS);
   glTexCoord2f(0.0f,0.0f); glVertex3f(0, -1.5*cube, -1.5*cube);
-  glTexCoord2f(10.0f,0.0f);glVertex3f(0, -1.5*cube, 1.5*cube);
-  glTexCoord2f(10.0f,10.0f);glVertex3f(0, 1.5*cube, 1.5*cube);
-  glTexCoord2f(0.0f,10.0f); glVertex3f(0, 1.5*cube, -1.5*cube);
+  glTexCoord2f(3.0f,0.0f);glVertex3f(0, -1.5*cube, 1.5*cube);
+  glTexCoord2f(3.0f,3.0f);glVertex3f(0, 1.5*cube, 1.5*cube);
+  glTexCoord2f(0.0f,3.0f); glVertex3f(0, 1.5*cube, -1.5*cube);
   glEnd();
   glPopMatrix();
   glDisable(GL_TEXTURE_2D);

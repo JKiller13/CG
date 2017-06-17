@@ -31,17 +31,18 @@ public:
   bool onAir = false;
   GLfloat size = 3;////meter global
   GLfloat x = 15, y = 0, z = 0;
-  GLfloat color;
+  int textn;
   GLfloat cubeside = 0;
   GLfloat faceside = 0;
-  GLuint texture;
+  int texturesn = 7;
+  char tpath[7][30] = {"cim.bmp", "wall2.bmp", "pista.bmp", "lava.bmp", "grass.bmp", "rocks.bmp", "ground.bmp"};
+  GLuint textures[7];
   RgbImage imag;
 
   void move();
   void update();
   void draw();
-  void loadTexture();
-
+  void loadTexture(char path[], int pos, GLuint textures[]);
 };
 
 #endif
