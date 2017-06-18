@@ -33,6 +33,7 @@ public:
   
 	void loadAllTextures();
   	void drawSkybox(int d);
-  	void drawInitial(GLfloat cube);
+  	void drawInitial(GLfloat cube, GLfloat x, GLfloat y, GLfloat z);
 };
+
 

@@ -24,11 +24,14 @@ using namespace std;
 #define PI     3.14159
 
 
+
+
 class Square {
 public:
   Square();
   ~Square();
   bool onAir = false;
+  bool rejected = false;
   GLfloat size = 3;////meter global
   GLfloat x = 15, y = 0, z = 0;
   int textn;
@@ -38,10 +41,11 @@ public:
   char tpath[7][30] = {"cim.bmp", "wall2.bmp", "pista.bmp", "lava.bmp", "grass.bmp", "rocks.bmp", "ground.bmp"};
   GLuint textures[7];
   RgbImage imag;
-
-  void move();
+  void rotation(int side, GLfloat posCubeX, GLfloat posCubeY, GLfloat posCubeZ);
+  void move(GLfloat posCubeX, GLfloat posCubeY, GLfloat posCubeZ);
   void update();
   void draw();
+  void cubeMove(int side);
   void loadTexture(char path[], int pos, GLuint textures[]);
 };
 

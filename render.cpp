@@ -1,15 +1,16 @@
 #include "render.hpp"
-
+#include <stdio.h>
 Render::Render(){}
 
 Render::~Render(){}
 
 
 
-void Render::drawInitial(GLfloat cube){
+void Render::drawInitial(GLfloat cube, GLfloat x, GLfloat y, GLfloat z){
   glEnable(GL_TEXTURE_2D);
   glBindTexture(GL_TEXTURE_2D,textures[0]);
   glPushMatrix();
+  glTranslatef(x, y, z);
   glTranslatef(0,-1.5*cube, 0);
   glBegin(GL_QUADS);
   glTexCoord2f(0.0f,0.0f);glVertex3f(-1.5*cube, 0, -1.5*cube);
@@ -21,6 +22,7 @@ void Render::drawInitial(GLfloat cube){
 
 
   glPushMatrix();
+  glTranslatef(x, y, z);
   glTranslatef(0,1.5*cube, 0);
   glBegin(GL_QUADS);
   glTexCoord2f(0.0f,0.0f);glVertex3f(-1.5*cube, 0, -1.5*cube);
@@ -31,6 +33,7 @@ void Render::drawInitial(GLfloat cube){
   glPopMatrix();
 
   glPushMatrix();
+  glTranslatef(x, y, z);
   glTranslatef(0,0,1.5*cube);
   glBegin(GL_QUADS);
   glTexCoord2f(0.0f,0.0f);glVertex3f(-1.5*cube, -1.5*cube, 0);
@@ -41,6 +44,7 @@ void Render::drawInitial(GLfloat cube){
   glPopMatrix();
 
   glPushMatrix();
+  glTranslatef(x, y, z);
   glTranslatef(0,0,-1.5*cube);
   glBegin(GL_QUADS);
   glTexCoord2f(0.0f,0.0f);glVertex3f(-1.5*cube, -1.5*cube, 0);
@@ -51,6 +55,7 @@ void Render::drawInitial(GLfloat cube){
   glPopMatrix();
 
   glPushMatrix();
+  glTranslatef(x, y, z);
   glTranslatef(1.5*cube,0,0);
   glBegin(GL_QUADS);
   glTexCoord2f(0.0f,0.0f); glVertex3f(0, -1.5*cube, -1.5*cube);
@@ -61,6 +66,7 @@ void Render::drawInitial(GLfloat cube){
   glPopMatrix();
 
   glPushMatrix();
+  glTranslatef(x, y, z);
   glTranslatef(-1.5*cube, 0, 0);
   glBegin(GL_QUADS);
   glTexCoord2f(0.0f,0.0f); glVertex3f(0, -1.5*cube, -1.5*cube);

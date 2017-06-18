@@ -1,5 +1,6 @@
 #include "square.hpp"
 #include <stdio.h>
+#include "math.h"
 
 Square::Square(){}
 
@@ -19,54 +20,197 @@ void Square::loadTexture(char path[], int pos, GLuint textures[]){
 }
 
 
-void Square::move(){
+void Square::move(GLfloat posCubeX, GLfloat posCubeY, GLfloat posCubeZ){
     if(cubeside < 1){
         x = x-0.5;
-        printf("x %d\n", x);
-        if(x < 2*size){
-            x = 2*size;
+        if(x < 2*size+posCubeX){
+            if(posCubeY-size > y ||posCubeY+size < y || posCubeZ-size > z || posCubeZ+size < z){
+                rejected = true;
+            }
+            x = 2*size+posCubeX;
             onAir = false;
         }
     }
     else if(cubeside < 2){
         y = y-0.5;
-        if(y < 2*size){
-            y = 2*size;
+        if(y < 2*size+posCubeY){//ok
+            if(posCubeZ-size > z ||posCubeZ+size < z || posCubeX-size > x || posCubeX+size < x){
+                rejected = true;
+            }
             onAir = false;
+            y = 2*size+posCubeY;
         }
     }
     else if(cubeside < 3){
         z = z-0.5;
-        if(z < 2*size){
-            z = 2*size;
+        if(z < 2*size+posCubeZ){
+            if(posCubeX-size > x ||posCubeX*size < x || posCubeY*size > y || posCubeY+size < y){
+                rejected = true;
+            }
+            z = 2*size+posCubeZ;
             onAir = false;
         }
     }
     else if(cubeside < 4){
         x = x+0.5;
-        if(x > -2*size){
-            x = -2*size;
+        if(x > -2*size+posCubeX){
+            if(posCubeY-size > y ||posCubeY+size < y || posCubeZ-size > z || posCubeZ+size < z){
+                rejected = true;
+            }
+            x = -2*size+posCubeX;
             onAir = false;
         }
     }
     else if(cubeside < 5){
         y = y+0.5;
-        if(y > -2*size){
-            y = -2*size;
+        if(y > -2*size+posCubeY){
+            if(posCubeZ-size > z ||posCubeZ+size < z || posCubeX-size > x || posCubeX+size < x){
+                rejected = true;
+            }
+            y = -2*size+posCubeY;
             onAir = false;
         }
     }
     else {
         z = z+0.5;
-        if(z > -2*size){
-            z = -2*size;
+        if(z > -2*size+posCubeZ){
+            if(posCubeX-size > x ||posCubeX+size < x || posCubeY-size > y || posCubeY+size < y){
+                rejected = true;
+            }
+            z = -2*size+posCubeZ;
             onAir = false;
         }
     }
-
-
 }
 
+void Square::cubeMove(int side){
+    if(side == 1){
+        y = y+size;  
+    }
+    else if(side == 2){
+        y = y-size;  
+    }
+    else if(side == 3){
+        x = x+size;  
+    }
+    else if(side == 4){
+        x = x-size;      
+    }
+    else if(side == 5){
+        z = z+size;
+    }
+    else if(side == 6){
+        z = z-size;      
+    }
+}
+
+
+
+
+void Square::rotation(int side, GLfloat posCubeX, GLfloat posCubeY, GLfloat posCubeZ){
+    GLfloat aux;
+    if(side == 1){//torno z
+        aux = z;
+        z = -y;
+        y = aux;
+
+        if(cubeside < 1){
+            cubeside = 0.9;//dir
+        }
+        else if(cubeside < 2){//tras
+            cubeside = 5.9;
+        }
+        else if(cubeside < 3){
+            cubeside = 1.9;//cima
+        } 
+        else if(cubeside < 4){
+            cubeside = 3.9;//esq
+
+        }
+        else if(cubeside < 5){
+            cubeside = 2.9;//frente
+
+        }
+        else {
+            cubeside = 4.9;//baixo
+        }
+    }
+    else if(side == 2){//torno z
+        aux = -z;
+        z = y;
+        y = aux;
+
+        if(cubeside < 1){
+            cubeside = 0.9;//dir
+        }
+        else if(cubeside < 2){
+            cubeside = 2.9;//frente
+        }
+        else if(cubeside < 3){
+            cubeside = 4.9;//baixo
+        } 
+        else if(cubeside < 4){
+            cubeside = 3.9;//esq
+
+        }
+        else if(cubeside < 5){
+            cubeside = 5.9;
+
+        }
+        else {
+            cubeside = 1.9;//cima
+        }
+
+    }
+    else if(side == 3){//torno y
+        aux = -z;
+        z = x;
+        x = aux;   
+
+        if(cubeside < 1){
+            cubeside = 2.9;//frente
+        }
+        else if(cubeside < 2){
+            cubeside = 1.9;//cima
+        }
+        else if(cubeside < 3){
+            cubeside = 3.9;//esq
+        } 
+        else if(cubeside < 4){
+            cubeside = 5.9;//tras
+        }
+        else if(cubeside < 5){
+            cubeside = 4.9;//baixo
+        }
+        else {
+            cubeside = 0.9;//dir
+        }
+    }
+    else {//torno y
+        aux = z;
+        z = -x;
+        x = aux;  
+        if(cubeside < 1){
+            cubeside = 5.9;//tras
+        }
+        else if(cubeside < 2){
+            cubeside = 1.9;//cima
+        }
+        else if(cubeside < 3){
+            cubeside = 0.9;//dir
+        } 
+        else if(cubeside < 4){
+            cubeside = 2.9;//frente
+        }
+        else if(cubeside < 5){
+            cubeside = 4.9;//baixo
+        }
+        else {
+            cubeside = 3.9;//esq
+        } 
+    }    
+
+}
 
 void Square::draw(){
 
@@ -74,7 +218,6 @@ void Square::draw(){
         loadTexture(tpath[i], i, textures);//aqui maybe not
     }
     bool check = false;
-
     glEnable(GL_TEXTURE_2D);
     glPushMatrix();
     glTranslatef(x,y,z);
@@ -194,17 +337,6 @@ void Square::draw(){
         glTexCoord2f(0.0f,1.0f);glVertex3f(size/2, size/2, -size/2);
         glEnd();
     }
-
-
-
-
-
-
-
-
-
-
-
 
     glDisable(GL_TEXTURE_2D);
     glPopMatrix();
