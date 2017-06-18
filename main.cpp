@@ -139,8 +139,8 @@ GLfloat getSide(){
 }
 
 void newSquare(){//pos random de novo cubo
-	GLfloat lado = 4.9;
-	//GLfloat lado = random(0, 6);
+	//GLfloat lado = 2.9;
+	GLfloat lado = random(0, 6);
 	GLfloat cube[3];
 	if(lado < 3){
 		if(lado<1){
@@ -245,7 +245,7 @@ void display(void){
 	glViewport (0, 0, wScreen, hScreen);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	gluPerspective(angZoom, (GLdouble) wScreen / hScreen, 1.0, 100.0);
+	gluPerspective(angZoom, (GLdouble) wScreen / hScreen, 1.0, 250.0);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 	gluLookAt(obsP[0], obsP[1], obsP[2], 0,0,0, 0,1,0);
@@ -254,6 +254,8 @@ void display(void){
 	glEnable(GL_COLOR_MATERIAL);
 	render.drawSkybox(100);
 	render.drawInitial(cube, posC[0], posC[1], posC[2]);
+	//render.manualDraw(12);
+
 	if(nsquares == 0 ){
 		newSquare();
 		nsquares++;
@@ -316,7 +318,10 @@ void init(void) {
 	glClearColor(WHITE);
 	glShadeModel(GL_SMOOTH);
 	glEnable(GL_DEPTH_TEST);
-	render.loadAllTextures();	
+	render.loadAllTextures();
+	for(int i= 0; i < square.texturesn; i++){
+        square.loadTexture(square.tpath[i], i, square.textures);//aqui maybe not
+    }
 	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
 	srand(1);
 	initLights();

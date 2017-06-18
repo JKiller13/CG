@@ -44,7 +44,7 @@ void Square::move(GLfloat posCubeX, GLfloat posCubeY, GLfloat posCubeZ){
     else if(cubeside < 3){
         z = z-0.5;
         if(z < 2*size+posCubeZ){
-            if(posCubeX-size > x ||posCubeX*size < x || posCubeY*size > y || posCubeY+size < y){
+            if(posCubeX-size > x ||posCubeX+size < x || posCubeY-size > y || posCubeY+size < y){
                 rejected = true;
             }
             z = 2*size+posCubeZ;
@@ -117,7 +117,7 @@ void Square::rotation(int side, GLfloat posCubeX, GLfloat posCubeY, GLfloat posC
         if(cubeside < 1){
             cubeside = 0.9;//dir
         }
-        else if(cubeside < 2){//tras
+        else if(cubeside < 2){//t2ras
             cubeside = 5.9;
         }
         else if(cubeside < 3){
@@ -125,11 +125,9 @@ void Square::rotation(int side, GLfloat posCubeX, GLfloat posCubeY, GLfloat posC
         } 
         else if(cubeside < 4){
             cubeside = 3.9;//esq
-
         }
         else if(cubeside < 5){
             cubeside = 2.9;//frente
-
         }
         else {
             cubeside = 4.9;//baixo
@@ -163,9 +161,9 @@ void Square::rotation(int side, GLfloat posCubeX, GLfloat posCubeY, GLfloat posC
 
     }
     else if(side == 3){//torno y
-        aux = -z;
-        z = x;
-        x = aux;   
+        aux = -x;
+        x = z;
+        z = aux;   
 
         if(cubeside < 1){
             cubeside = 2.9;//frente
@@ -187,9 +185,9 @@ void Square::rotation(int side, GLfloat posCubeX, GLfloat posCubeY, GLfloat posC
         }
     }
     else {//torno y
-        aux = z;
-        z = -x;
-        x = aux;  
+        aux = x;
+        x = -z;
+        z = aux;  
         if(cubeside < 1){
             cubeside = 5.9;//tras
         }
@@ -214,9 +212,7 @@ void Square::rotation(int side, GLfloat posCubeX, GLfloat posCubeY, GLfloat posC
 
 void Square::draw(){
 
-    for(int i= 0; i < texturesn; i++){
-        loadTexture(tpath[i], i, textures);//aqui maybe not
-    }
+
     bool check = false;
     glEnable(GL_TEXTURE_2D);
     glPushMatrix();

@@ -1,10 +1,145 @@
 #include "render.hpp"
 #include <stdio.h>
+#include <math.h>
+
 Render::Render(){}
 
 Render::~Render(){}
 
 
+void Render::quadrado(GLfloat size, GLfloat x, GLfloat y, GLfloat z, int t){
+  glEnable(GL_TEXTURE_2D);
+  glPushMatrix();
+  glColor3f(1, 1, 0);
+  glTranslatef(x,y,z);
+  glBindTexture(GL_TEXTURE_2D, textures[t]);
+  glBegin(GL_QUADS);
+  glTexCoord2f(0.0f,0.0f); glVertex3f(size/2, size/2, -size/2);
+  glTexCoord2f(1.0f,0.0f);glVertex3f(size/2, size/2, size/2);
+  glTexCoord2f(1.0f,1.0f);glVertex3f(size/2, -size/2, size/2);
+  glTexCoord2f(0.0f,1.0f); glVertex3f(size/2, -size/2, -size/2);
+  glEnd();
+
+
+
+  glBegin(GL_QUADS);
+  glTexCoord2f(0.0f,0.0f);glVertex3f(size/2, size/2, -size/2);
+  glTexCoord2f(1.0f,0.0f);glVertex3f(-size/2, size/2, -size/2);
+  glTexCoord2f(1.0f,1.0f);glVertex3f(-size/2, size/2, size/2);
+  glTexCoord2f(0.0f,1.0f);glVertex3f(size/2, size/2, size/2);
+  glEnd();
+
+  glBegin(GL_QUADS);
+  glTexCoord2f(0.0f,0.0f);glVertex3f(size/2, size/2, size/2);
+  glTexCoord2f(1.0f,0.0f);glVertex3f(-size/2, size/2, size/2);
+  glTexCoord2f(1.0f,1.0f);glVertex3f(-size/2, -size/2, size/2);
+  glTexCoord2f(0.0f,1.0f);glVertex3f(size/2, -size/2, size/2);
+  glEnd();
+
+  glBegin(GL_QUADS);
+  glTexCoord2f(0.0f,0.0f); glVertex3f(-size/2, size/2, -size/2);
+  glTexCoord2f(1.0f,0.0f);glVertex3f(-size/2, size/2, size/2);
+  glTexCoord2f(1.0f,1.0f);glVertex3f(-size/2, -size/2, size/2);
+  glTexCoord2f(0.0f,1.0f);glVertex3f(-size/2, -size/2, -size/2);
+
+  glBegin(GL_QUADS);
+  glTexCoord2f(0.0f,0.0f);glVertex3f(size/2, -size/2, size/2);
+  glTexCoord2f(1.0f,0.0f);glVertex3f(-size/2, -size/2, size/2);
+  glTexCoord2f(1.0f,1.0f);glVertex3f(-size/2, -size/2, -size/2);
+  glTexCoord2f(0.0f,1.0f); glVertex3f(size/2, -size/2, -size/2);
+  glEnd();
+
+  glBegin(GL_QUADS);
+  glTexCoord2f(0.0f,0.0f);glVertex3f(size/2, -size/2, -size/2);
+  glTexCoord2f(1.0f,0.0f);glVertex3f(-size/2, -size/2, -size/2);
+  glTexCoord2f(1.0f,1.0f);glVertex3f(-size/2, size/2, -size/2);
+  glTexCoord2f(0.0f,1.0f);glVertex3f(size/2, size/2, -size/2);
+  glEnd();
+
+  glDisable(GL_TEXTURE_2D);
+  glRotatef(90, 1, 0, 0);
+  glPopMatrix();
+}
+
+
+void Render::manualDraw(GLfloat size){
+  //left
+  GLfloat x = -size*3;
+  GLfloat y = -size*3;
+  GLfloat z = -size*3;
+  for(int j = 0 ; j < 6; j++){
+    z=x;
+    for(int k = 0; k < 6; k++){
+      quadrado(size, x, y, z, 5);
+      z = z+size;
+    }
+    y = y+size;
+
+  }
+    //dir
+  x = size*3;
+  y = -size*3;
+  z = -size*3;
+  for(int j = 0 ; j < 6; j++){
+    z=-x;
+    for(int k = 0; k < 6; k++){
+      quadrado(size, x, y, z, 5);
+      z = z+size;
+    }
+    y = y+size;
+
+  }
+  x = -size*3;
+  y = +size*3;
+  z = -size*3;
+  for(int j = 0 ; j < 6; j++){
+    z=-y;
+    for(int k = 0; k < 6; k++){
+      quadrado(size, x, y, z, 5);
+      z = z+size;
+    }
+    x = x+size;
+
+  }
+  x = -size*3;
+  y = -size*3;
+  z = -size*3;
+  for(int j = 0 ; j < 6; j++){
+    z=y;
+    for(int k = 0; k < 6; k++){
+      quadrado(size, x, y, z, 5);
+      z = z+size;
+    }
+    x = x+size;
+
+  }
+  x = -size*3;
+  y = -size*3;
+  z = +size*3;
+  for(int j = 0 ; j < 6; j++){
+    y=-z;
+    for(int k = 0; k < 6; k++){
+      quadrado(size, x, y, z, 5);
+      y = y+size;
+    }
+    x = x+size;
+  }
+
+  x = -size*3;
+  y = -size*3;
+  z = -size*3;
+  for(int j = 0 ; j < 6; j++){
+    y=z;
+    for(int k = 0; k < 6; k++){
+      quadrado(size, x, y, z, 5);
+      y = y+size;
+    }
+    x = x+size;
+
+  }
+
+
+}
 
 void Render::drawInitial(GLfloat cube, GLfloat x, GLfloat y, GLfloat z){
   glEnable(GL_TEXTURE_2D);
@@ -144,12 +279,12 @@ void Render::drawSkybox(int d){
 
 void Render::loadAllTextures(){
   char bmpSkybox[5][30]={"skyrender0001.bmp","skyrender0002.bmp","skyrender0003.bmp","skyrender0004.bmp","skyrender0005.bmp"};
-  char bmpText[8][30]={"ground.bmp"};
+  char bmpText[8][30]={"cim.bmp", "wall2.bmp", "pista.bmp", "lava.bmp", "grass.bmp", "rocks.bmp", "ground.bmp"};
   int i;
   for(i=0;i<5;i++)
     loadSkyboxTexture(bmpSkybox[i],i,skyboxtex);
    //outras texturas a inserir
-  for(i=0;i<1;i++)
+  for(i=0;i<7;i++)
     loadTexture(bmpText[i],i, textures);
 }
 
