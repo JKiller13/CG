@@ -1,5 +1,5 @@
 #include "render.hpp"
-#include <stdio.h>
+
 Render::Render(){}
 
 Render::~Render(){}
@@ -79,13 +79,27 @@ void Render::drawInitial(GLfloat cube, GLfloat x, GLfloat y, GLfloat z){
 
 }
 
+void Render::drawBlend(){
+  glBegin (GL_TRIANGLES);
+      glColor4f(1.0, 1.0, 0.0, 1.0);
+      glVertex3f(0.1, 0.9, 0.0); 
+      glVertex3f(0.1, 0.1, 0.0); 
+      glVertex3f(0.7, 0.5, 0.0); 
+   glEnd();
+   glBegin (GL_TRIANGLES);
+      glColor4f(0.0, 1.0, 1.0, 0.5);
+      glVertex3f(0.9, 0.9, 0.0); 
+      glVertex3f(0.3, 0.5, 0.0); 
+      glVertex3f(0.9, 0.1, 0.0); 
+   glEnd();
+}
 
 void Render::drawSkybox(int d){
   d/=2;
   glEnable(GL_TEXTURE_2D);
+  glColor3f(1.0,1.0,1.0);
   glPushMatrix();
   glBindTexture(GL_TEXTURE_2D,skyboxtex[3]); //right
-  glColor3f(1.0,1.0,1.0);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
   glBegin(GL_QUADS);
@@ -96,7 +110,6 @@ void Render::drawSkybox(int d){
   glEnd();
 
   glBindTexture(GL_TEXTURE_2D,skyboxtex[4]); //front
-  glColor3f(1.0,1.0,1.0);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
   glBegin(GL_QUADS);
@@ -107,7 +120,6 @@ void Render::drawSkybox(int d){
   glEnd();
   
   glBindTexture(GL_TEXTURE_2D,skyboxtex[0]); //left
-  glColor3f(1.0,1.0,1.0);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
   glBegin(GL_QUADS);
@@ -118,7 +130,6 @@ void Render::drawSkybox(int d){
   glEnd();
   
   glBindTexture(GL_TEXTURE_2D,skyboxtex[1]); //back
-  glColor3f(1.0,1.0,1.0);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
   glBegin(GL_QUADS);
@@ -129,7 +140,6 @@ void Render::drawSkybox(int d){
   glEnd();
 
   glBindTexture(GL_TEXTURE_2D,skyboxtex[2]); //up
-  glColor3f(1.0,1.0,1.0);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
   glBegin(GL_QUADS);

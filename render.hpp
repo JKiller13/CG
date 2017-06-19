@@ -31,9 +31,9 @@ public:
 	GLuint textures[8];
 	GLuint skyboxtex[5];
   
+	void drawBlend();
 	void loadAllTextures();
   	void drawSkybox(int d);
   	void drawInitial(GLfloat cube, GLfloat x, GLfloat y, GLfloat z);
 };
-
 
