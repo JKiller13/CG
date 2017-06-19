@@ -11,6 +11,7 @@ void Render::quadrado(GLfloat size, GLfloat x, GLfloat y, GLfloat z, int t){
   glEnable(GL_TEXTURE_2D);
   glPushMatrix();
   glColor3f(1, 1, 0);
+  //glRotatef(30, 1, 0, 0);
   glTranslatef(x,y,z);
   glBindTexture(GL_TEXTURE_2D, textures[t]);
   glBegin(GL_QUADS);
@@ -57,7 +58,6 @@ void Render::quadrado(GLfloat size, GLfloat x, GLfloat y, GLfloat z, int t){
   glEnd();
 
   glDisable(GL_TEXTURE_2D);
-  glRotatef(90, 1, 0, 0);
   glPopMatrix();
 }
 
@@ -279,7 +279,7 @@ void Render::drawSkybox(int d){
 
 void Render::loadAllTextures(){
   char bmpSkybox[5][30]={"skyrender0001.bmp","skyrender0002.bmp","skyrender0003.bmp","skyrender0004.bmp","skyrender0005.bmp"};
-  char bmpText[8][30]={"cim.bmp", "wall2.bmp", "pista.bmp", "lava.bmp", "grass.bmp", "rocks.bmp", "ground.bmp"};
+  char bmpText[8][30]={"cim.bmp", "lava.bmp", "pista.bmp", "wall2.bmp", "grass.bmp", "rocks.bmp", "ground.bmp"};
   int i;
   for(i=0;i<5;i++)
     loadSkyboxTexture(bmpSkybox[i],i,skyboxtex);
