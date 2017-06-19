@@ -28,9 +28,10 @@ GLfloat  xC=16.0, yC = 16.0, zC=15.0;
 GLint    wScreen=600, hScreen=500;
 
 GLfloat cube=3.0;
+GLfloat buleP[]= {0, 0, 0};
 
 
-GLfloat draw_interval = 75;
+GLfloat draw_interval = 200;
 
 GLfloat sizeprincipal[6][6]= {1.5*cube};
 
@@ -46,7 +47,7 @@ GLfloat posCubes = 6*cube;
 int cubeside =0;
 
 //------------------------------------------------------------ Observador
-GLfloat  rVisao=5*cube, aVisao=0.5*PI;
+GLfloat  rVisao=4*cube, aVisao=0.5*PI;
 GLfloat  obsP[] ={rVisao*cos(aVisao),rVisao*cos(aVisao), rVisao*sin(aVisao)};
 
 GLfloat  angZoom=90;
@@ -55,6 +56,7 @@ GLfloat  incZoom=3;
 
 //------------------------------------------------------------ Lights
 GLfloat lightPos[4];
+GLfloat light_pos[4]={0.0,-15.0,0.0,1.0};
 GLfloat ambientColor[4] = {0.2, 0.2, 0.2, 1.0};
 GLfloat l_Amb[4] = {0.2, 0.2, 0.2, 1.0};
 GLfloat l_Dif[4] = {1.0, 1.0, 1.0, 1.0};
@@ -70,7 +72,6 @@ bool fog = false;
 void insertSquare() {
 	allsquares[nsquares-1] = square;
 	nsquares++;
-
 }
 
 int random(int minimo, int maximo){	
@@ -90,18 +91,6 @@ void desenhaTexto(char *string) {
 	while (*string)
 		glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, *string++);
 }
-
-/*void calcInsert(){
-
-	if(square.x == (posC[0]+1.5*cube)){
-		sizeprincipal[0][]
-		if(square.y == (posC[1]+1.5*cube)){
-			sizeprincipal[0][]
-		}
-	}
-
-
-}*/
 
 
 int randomtexture(GLfloat color){
@@ -141,54 +130,58 @@ GLfloat getSide(){
 void newSquare(){//pos random de novo cubo
 	//GLfloat lado = 2.9;
 	GLfloat lado = random(0, 6);
+<<<<<<< HEAD
 	GLfloat cube[3];
+=======
+	printf("lado %f\n", lado);
+>>>>>>> 0746ae2af219051a6f33d7730844c0993d45a1b0
 	if(lado < 3){
 		if(lado<1){
 			cubeside = 1;
-			cube[0] = posCubes;
-			cube[1] = getSide();
-			cube[2] = getSide();
+			posC[0] = posCubes;
+			posC[1] = getSide();
+			posC[2] = getSide();
 		}
 		else if (lado<2){
 			cubeside = 3;
-			cube[1] = posCubes;
-			cube[0] = getSide();
-			cube[2] = getSide();
+			posC[1] = posCubes;
+			posC[0] = getSide();
+			posC[2] = getSide();
 		}
 		else{
 			cubeside = 2;
-			cube[2] = posCubes;
-			cube[1] = getSide();
-			cube[0] = getSide();
+			posC[2] = posCubes;
+			posC[1] = getSide();
+			posC[0] = getSide();
 		}
 	}
 	else{
 		if(lado<4){
 			cubeside = 4;
-			cube[0] = -posCubes;
-			cube[1] = getSide();
-			cube[2] = getSide();
+			posC[0] = -posCubes;
+			posC[1] = getSide();
+			posC[2] = getSide();
 		}
 		else if (lado<5){
 			cubeside = 6;
-			cube[1] = -posCubes;
-			cube[0] = getSide();
-			cube[2] = getSide();
+			posC[1] = -posCubes;
+			posC[0] = getSide();
+			posC[2] = getSide();
 		}
 		else{
 			cubeside = 5;
-			cube[2] = -posCubes;
-			cube[1] = getSide();
-			cube[0] = getSide();
+			posC[2] = -posCubes;
+			posC[1] = getSide();
+			posC[0] = getSide();
 		}
 	}
 
 	square.textn = random(0, 6);
 	//square.color = randomColor();
 	square.cubeside = lado;
-	square.x = cube[0];
-	square.y = cube[1];
-	square.z = cube[2];
+	square.x = posC[0];
+	square.y = posC[1];
+	square.z = posC[2];
 }
 
 void CubeRotation(int side){
@@ -225,7 +218,6 @@ void cubeMove(int side){
 }
 
 
-
 void update(){
 
 	square.move(posC[0], posC[1], posC[2]);
@@ -233,11 +225,59 @@ void update(){
 }
 
 void timer(int) {
-	update();
-	glutPostRedisplay();
-	glutTimerFunc(draw_interval, timer, 0);
+  update();
+  glutPostRedisplay();
+  glutTimerFunc(draw_interval, timer, 0);
 }
 
+void initLights(){
+	if(night){
+		ambientColor[0] = 0.2f;
+	    ambientColor[1] = 0.2f;
+	    ambientColor[2] = 0.2f;
+	}
+	else{
+	    ambientColor[0] = 0.8f;
+	    ambientColor[1] = 0.8f;
+	    ambientColor[2] = 0.8f;
+	}
+	ambientColor[3] = 1.0;
+
+	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, ambientColor);
+
+	lightPos[0] = -10.0;
+	lightPos[1] = -10.0;
+	lightPos[2] = 5.0;
+	lightPos[3] = 1.0;
+
+	glEnable(GL_LIGHT0);
+	glLightfv(GL_LIGHT0, GL_POSITION, lightPos);
+	glLightfv(GL_LIGHT0, GL_AMBIENT, l_Amb);
+	glLightfv(GL_LIGHT0, GL_DIFFUSE, l_Dif);
+	glLightfv(GL_LIGHT0, GL_SPECULAR, l_Esp);
+	glLightf(GL_LIGHT0,GL_CONSTANT_ATTENUATION,constAt);
+    glLightf(GL_LIGHT0,GL_LINEAR_ATTENUATION,linAt);
+    glLightf(GL_LIGHT0,GL_QUADRATIC_ATTENUATION,quadAt);
+
+    GLfloat direction[3]={0.0,1.0,0.0};
+    glEnable(GL_LIGHT1);
+	glLightfv(GL_LIGHT1, GL_POSITION, light_pos);
+	glLightfv(GL_LIGHT1, GL_AMBIENT, l_Amb);
+	glLightfv(GL_LIGHT1, GL_DIFFUSE, l_Dif);
+	glLightfv(GL_LIGHT1, GL_SPECULAR, l_Esp);
+	glLightf(GL_LIGHT1,GL_CONSTANT_ATTENUATION,constAt);
+    glLightf(GL_LIGHT1,GL_LINEAR_ATTENUATION,linAt);
+    glLightf(GL_LIGHT1,GL_QUADRATIC_ATTENUATION,quadAt);
+    glLightf(GL_LIGHT0,GL_SPOT_CUTOFF, 90);
+  	glLightfv(GL_LIGHT0,GL_SPOT_DIRECTION, direction);
+  	glLightf(GL_LIGHT0,GL_SPOT_EXPONENT, 5.0);
+
+    if(night)
+    	glDisable(GL_LIGHT0);
+    else
+    	glEnable(GL_LIGHT0);
+
+}
 
 void display(void){
 	
@@ -249,9 +289,7 @@ void display(void){
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 	gluLookAt(obsP[0], obsP[1], obsP[2], 0,0,0, 0,1,0);
-	//luzes
-	glEnable(GL_LIGHTING);
-	glEnable(GL_COLOR_MATERIAL);
+	//render.drawBlend();
 	render.drawSkybox(100);
 	render.drawInitial(cube, posC[0], posC[1], posC[2]);
 	//render.manualDraw(12);
@@ -261,9 +299,8 @@ void display(void){
 		nsquares++;
 	}
 	else if(square.onAir == false){
-		if(!square.rejected)insertSquare();
+		if(!square.rejected) insertSquare();
 		else square.rejected = false;
-		//calcInsert();
 		newSquare();	
 	}
 	if(nsquares != 0 ){
@@ -271,8 +308,19 @@ void display(void){
 			allsquares[i].draw();
 		}
 	}
-	
 	square.draw();
+
+	GLfloat fogColor[3] = {0.7,0.7,0.7};
+	initLights();
+	glFogfv(GL_FOG_COLOR, fogColor); //Cor do nevoeiro
+	glFogi(GL_FOG_MODE, GL_EXP); //Equacao do nevoeiro - linear
+	glFogf(GL_FOG_START, 40.0); // Distancia a que tera inicio o nevoeiro
+	glFogf(GL_FOG_END, 60.0); // Distancia a que o nevoeiro terminar
+	glFogf (GL_FOG_DENSITY, 0.10);
+	if(fog)
+		glEnable(GL_FOG);
+	else
+		glDisable(GL_FOG);
 	glutSwapBuffers();
 
 }
@@ -283,49 +331,28 @@ GLvoid resize(GLsizei width, GLsizei height) {
 	render.drawInitial(cube, posC[0], posC[1], posC[2]);	
 }
 
-void initLights(){
-	if(night){
-		ambientColor[0] = 0.2f;
-		ambientColor[1] = 0.2f;
-		ambientColor[2] = 0.2f;
-	}
-	else{
-		ambientColor[0] = 0.8f;
-		ambientColor[1] = 0.8f;
-		ambientColor[2] = 0.8f;
-	}
-	ambientColor[3] = 1.0;
-
-	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, ambientColor);
-
-	lightPos[0] = 50.0;
-	lightPos[1] = 50.0;
-	lightPos[2] = 25.0;
-	lightPos[2] = 1.0;
-
-	glEnable(GL_LIGHT0);
-	glLightfv(GL_LIGHT0, GL_POSITION, lightPos);
-	glLightfv(GL_LIGHT0, GL_AMBIENT, l_Amb);
-	glLightfv(GL_LIGHT0, GL_DIFFUSE, l_Dif);
-	glLightfv(GL_LIGHT0, GL_SPECULAR, l_Esp);
-	glLightf(GL_LIGHT0,GL_CONSTANT_ATTENUATION,constAt);
-	glLightf(GL_LIGHT0,GL_LINEAR_ATTENUATION,linAt);
-	glLightf(GL_LIGHT0,GL_QUADRATIC_ATTENUATION,quadAt);
-
-}
-
 void init(void) {
 	glClearColor(WHITE);
 	glShadeModel(GL_SMOOTH);
 	glEnable(GL_DEPTH_TEST);
+<<<<<<< HEAD
 	render.loadAllTextures();
 	for(int i= 0; i < square.texturesn; i++){
         square.loadTexture(square.tpath[i], i, square.textures);//aqui maybe not
     }
+=======
+	glEnable(GL_NORMALIZE);
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glEnable(GL_LIGHTING);
+	glEnable(GL_COLOR_MATERIAL);
+	glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE);
+
+	render.loadAllTextures();	
+>>>>>>> 0746ae2af219051a6f33d7730844c0993d45a1b0
 	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
 	srand(1);
 	initLights();
-	glEnable(GL_LIGHTING);
 }
 
 void keyboard(unsigned char key, int x, int y){
@@ -339,15 +366,24 @@ void keyboard(unsigned char key, int x, int y){
 			angZoom=150;
 		glutPostRedisplay();
 		break;
-	//--------------------------- Zoom
+
 		case '-':
 		angZoom=angZoom-incZoom;
 		if (angZoom<10)
 			angZoom=10;
 		glutPostRedisplay();
 		break;
-
-	//Cube rotation
+	//--------------------------- Fog
+		case 'f':
+		case 'F':
+			fog=!fog;
+		break;
+	//--------------------------- Night
+		case 'n':
+		case 'N':
+			night=!night;
+		break;
+	//--------------------------- Cube rotation
 		case 'q':
 		posC[1] +=cube;
 		cubeMove(1);
@@ -393,7 +429,6 @@ void keyboard(unsigned char key, int x, int y){
 		case '3':
 		CubeRotation(4);
 		break;
-
 
 	//--------------------------- Escape
 		case 27:

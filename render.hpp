@@ -31,11 +31,11 @@ public:
 	GLuint textures[8];
 	GLuint skyboxtex[5];
   
+	void drawBlend();
 	void loadAllTextures();
   	void drawSkybox(int d);
   	void manualDraw(GLfloat size);
   	void drawInitial(GLfloat cube, GLfloat x, GLfloat y, GLfloat z);
   	void quadrado(GLfloat size, GLfloat x, GLfloat y, GLfloat z, int text);
 };
-
 
