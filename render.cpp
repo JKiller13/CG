@@ -12,7 +12,7 @@ void Render::quadrado(GLfloat size, GLfloat x, GLfloat y, GLfloat z, int t){
   glEnable(GL_TEXTURE_2D);
   glPushMatrix();
   glColor3f(1, 1, 0);
-  //glRotatef(30, 1, 0, 0);
+  glRotatef(45, 1, 0, 0);
   glTranslatef(x,y,z);
   glBindTexture(GL_TEXTURE_2D, textures[t]);
   glBegin(GL_QUADS);
@@ -77,7 +77,7 @@ void Render::manualDraw(GLfloat size){
     y = y+size;
 
   }
-    //dir
+  /*  //dir
   x = size*3;
   y = -size*3;
   z = -size*3;
@@ -138,7 +138,7 @@ void Render::manualDraw(GLfloat size){
     x = x+size;
 
   }
-
+*/
 
 }
 

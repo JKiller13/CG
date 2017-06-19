@@ -130,11 +130,8 @@ GLfloat getSide(){
 void newSquare(){//pos random de novo cubo
 	//GLfloat lado = 2.9;
 	GLfloat lado = random(0, 6);
-<<<<<<< HEAD
 	GLfloat cube[3];
-=======
-	printf("lado %f\n", lado);
->>>>>>> 0746ae2af219051a6f33d7730844c0993d45a1b0
+
 	if(lado < 3){
 		if(lado<1){
 			cubeside = 1;
@@ -335,21 +332,16 @@ void init(void) {
 	glClearColor(WHITE);
 	glShadeModel(GL_SMOOTH);
 	glEnable(GL_DEPTH_TEST);
-<<<<<<< HEAD
 	render.loadAllTextures();
 	for(int i= 0; i < square.texturesn; i++){
         square.loadTexture(square.tpath[i], i, square.textures);//aqui maybe not
     }
-=======
 	glEnable(GL_NORMALIZE);
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glEnable(GL_LIGHTING);
 	glEnable(GL_COLOR_MATERIAL);
 	glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE);
-
-	render.loadAllTextures();	
->>>>>>> 0746ae2af219051a6f33d7730844c0993d45a1b0
 	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
 	srand(1);
 	initLights();
