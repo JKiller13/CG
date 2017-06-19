@@ -230,6 +230,27 @@ void Render::drawBlend(){
    glEnd();
 }
 
+/*void Render::drawField(){
+  GLfloat d = 50.0;
+  glPushMatrix();
+    glNormal3f(0.0, 1.0, 0.0);
+    glBegin(GL_QUADS);
+      glColor4f(VERDE);
+      glVertex3f(-d,-d, -d);
+      glVertex3f(d, -d, -d);
+      glVertex3f(d, -d, d);
+      glVertex3f(-d, -d, d);
+    glEnd();
+    glBegin(GL_QUADS);
+      glColor4f(WHITE);
+      glVertex3f(-5,-d, 0);
+      glVertex3f(0, -d, -5);
+      glVertex3f(5, -d, 0);
+      glVertex3f(0, -d, 5);
+    glEnd();
+  glPopMatrix();
+}*/
+
 void Render::drawSkybox(int d){
   d/=2;
   glEnable(GL_TEXTURE_2D);
