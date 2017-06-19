@@ -312,6 +312,26 @@ void initLights(){
 	glLightf(GL_LIGHT0,GL_LINEAR_ATTENUATION,linAt);
 	glLightf(GL_LIGHT0,GL_QUADRATIC_ATTENUATION,quadAt);
 
+	GLfloat direction[3]={0.0,1.0,0.0};
+    GLfloat cor1[4]={0.0,1.0,0.0,1.0};
+    GLfloat light_pos[4]={0.0,-50.0,0.0,1.0};
+    glEnable(GL_LIGHT1);
+	glLightfv(GL_LIGHT1, GL_POSITION, light_pos);
+	glLightfv(GL_LIGHT1, GL_AMBIENT, l_Amb);
+	glLightfv(GL_LIGHT1, GL_DIFFUSE, cor1);
+	glLightfv(GL_LIGHT1, GL_SPECULAR, l_Esp);
+	glLightf(GL_LIGHT1,GL_CONSTANT_ATTENUATION,constAt);
+    glLightf(GL_LIGHT1,GL_LINEAR_ATTENUATION,linAt);
+    glLightf(GL_LIGHT1,GL_QUADRATIC_ATTENUATION,quadAt);
+    glLightf(GL_LIGHT0,GL_SPOT_CUTOFF, 90);
+  	glLightfv(GL_LIGHT0,GL_SPOT_DIRECTION, direction);
+  	glLightf(GL_LIGHT0,GL_SPOT_EXPONENT, 5.0);
+
+    if(night)
+    	glDisable(GL_LIGHT0);
+    else
+    	glEnable(GL_LIGHT0);
+
 }
 
 void init(void) {
@@ -399,7 +419,16 @@ void keyboard(unsigned char key, int x, int y){
 		case '3':
 		CubeRotation(4);
 		break;
-
+	//--------------------------- Fog
+		case 'f':
+		case 'F':
+			fog=!fog;
+		break;
+	//--------------------------- Night
+		case 'n':
+		case 'N':
+			night=!night;
+		break;
 
 	//--------------------------- Escape
 		case 27:
