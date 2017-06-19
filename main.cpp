@@ -55,6 +55,7 @@ GLfloat  incZoom=3;
 
 //------------------------------------------------------------ Lights
 GLfloat lightPos[4];
+GLfloat lightSquare[4];
 GLfloat ambientColor[4] = {0.2, 0.2, 0.2, 1.0};
 GLfloat l_Amb[4] = {0.2, 0.2, 0.2, 1.0};
 GLfloat l_Dif[4] = {1.0, 1.0, 1.0, 1.0};
@@ -189,6 +190,11 @@ void newSquare(){//pos random de novo cubo
 	square.x = cube[0];
 	square.y = cube[1];
 	square.z = cube[2];
+
+	//direction of the light		
+	GLfloat direction[3]={0.0,1.0,0.0};		
+	glLightfv(GL_LIGHT0,GL_SPOT_DIRECTION, direction);		
+	glEnable(GL_LIGHT1);
 }
 
 void CubeRotation(int side){
@@ -229,7 +235,11 @@ void cubeMove(int side){
 void update(){
 
 	square.move(posC[0], posC[1], posC[2]);
-	//printf("move to %f %f %f\n",square.x, square.y, square.z );
+	lightSquare[0]=square.x;		
+	lightSquare[1]=square.y;		
+	lightSquare[2]=square.z;		
+	lightSquare[3]=1.0;		
+	glLightfv(GL_LIGHT1, GL_POSITION, lightSquare);
 }
 
 void timer(int) {
@@ -238,6 +248,50 @@ void timer(int) {
 	glutTimerFunc(draw_interval, timer, 0);
 }
 
+void initLights(){		
+	if(night){		
+		ambientColor[0] = 0.2f;		
+		ambientColor[1] = 0.2f;		
+		ambientColor[2] = 0.2f;		
+	}		
+	else{		
+		ambientColor[0] = 0.8f;		
+		ambientColor[1] = 0.8f;		
+		ambientColor[2] = 0.8f;		
+	}		
+	ambientColor[3] = 1.0;		
+	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, ambientColor);		
+	lightPos[0] = 0.0;		
+	lightPos[1] = 50.0;		
+	lightPos[2] = 0.0;		
+	lightPos[2] = 1.0;		
+	glEnable(GL_LIGHT0);		
+	glLightfv(GL_LIGHT0, GL_POSITION, lightPos);		
+	glLightfv(GL_LIGHT0, GL_AMBIENT, l_Amb);		
+	glLightfv(GL_LIGHT0, GL_DIFFUSE, l_Dif);		
+	glLightfv(GL_LIGHT0, GL_SPECULAR, l_Esp);		
+	glLightf(GL_LIGHT0,GL_CONSTANT_ATTENUATION,constAt);		
+	glLightf(GL_LIGHT0,GL_LINEAR_ATTENUATION,linAt);		
+	glLightf(GL_LIGHT0,GL_QUADRATIC_ATTENUATION,quadAt);		
+	//square light		
+	GLfloat cor1[4]={1.0,1.0,1.0,1.0};		
+    GLfloat angle = 1;		
+    GLfloat exp = 0.5;		
+	glLightfv(GL_LIGHT1, GL_AMBIENT, l_Amb);		
+	glLightfv(GL_LIGHT1, GL_DIFFUSE, cor1);		
+	glLightfv(GL_LIGHT1, GL_SPECULAR, cor1);		
+	glLightf(GL_LIGHT1,GL_CONSTANT_ATTENUATION,constAt);		
+    glLightf(GL_LIGHT1,GL_LINEAR_ATTENUATION,linAt);		
+    glLightf(GL_LIGHT1,GL_QUADRATIC_ATTENUATION,quadAt);		
+    glLightf(GL_LIGHT0,GL_SPOT_CUTOFF, angle);		
+  	glLightf(GL_LIGHT0,GL_SPOT_EXPONENT, exp);		
+    if(night){		
+    	glDisable(GL_LIGHT0);		
+    }		
+    else{		
+    	glEnable(GL_LIGHT0);		
+    }		
+}
 
 void display(void){
 	
@@ -264,6 +318,7 @@ void display(void){
 		if(!square.rejected)insertSquare();
 		else square.rejected = false;
 		//calcInsert();
+		glDisable(GL_LIGHT1);
 		newSquare();	
 	}
 	if(nsquares != 0 ){
@@ -273,6 +328,17 @@ void display(void){
 	}
 	
 	square.draw();
+	GLfloat fogColor[3] = {0.7,0.7,0.7};		
+ 	initLights();		
+ 	glFogfv(GL_FOG_COLOR, fogColor); //Cor do nevoeiro		
+ 	glFogi(GL_FOG_MODE, GL_EXP); //Equacao do nevoeiro - linear		
+ 	glFogf(GL_FOG_START, 40.0); // Distancia a que tera inicio o nevoeiro		
+ 	glFogf(GL_FOG_END, 60.0); // Distancia a que o nevoeiro terminar		
+ 	glFogf (GL_FOG_DENSITY, 0.10);		
+ 	if(fog)		
+ 		glEnable(GL_FOG);		
+ 	else		
+ 		glDisable(GL_FOG);
 	glutSwapBuffers();
 
 }
@@ -281,57 +347,6 @@ GLvoid resize(GLsizei width, GLsizei height) {
 	wScreen=width;
 	hScreen=height;
 	render.drawInitial(cube, posC[0], posC[1], posC[2]);	
-}
-
-void initLights(){
-	if(night){
-		ambientColor[0] = 0.2f;
-		ambientColor[1] = 0.2f;
-		ambientColor[2] = 0.2f;
-	}
-	else{
-		ambientColor[0] = 0.8f;
-		ambientColor[1] = 0.8f;
-		ambientColor[2] = 0.8f;
-	}
-	ambientColor[3] = 1.0;
-
-	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, ambientColor);
-
-	lightPos[0] = 50.0;
-	lightPos[1] = 50.0;
-	lightPos[2] = 25.0;
-	lightPos[2] = 1.0;
-
-	glEnable(GL_LIGHT0);
-	glLightfv(GL_LIGHT0, GL_POSITION, lightPos);
-	glLightfv(GL_LIGHT0, GL_AMBIENT, l_Amb);
-	glLightfv(GL_LIGHT0, GL_DIFFUSE, l_Dif);
-	glLightfv(GL_LIGHT0, GL_SPECULAR, l_Esp);
-	glLightf(GL_LIGHT0,GL_CONSTANT_ATTENUATION,constAt);
-	glLightf(GL_LIGHT0,GL_LINEAR_ATTENUATION,linAt);
-	glLightf(GL_LIGHT0,GL_QUADRATIC_ATTENUATION,quadAt);
-
-	GLfloat direction[3]={0.0,1.0,0.0};
-    GLfloat cor1[4]={0.0,1.0,0.0,1.0};
-    GLfloat light_pos[4]={0.0,-50.0,0.0,1.0};
-    glEnable(GL_LIGHT1);
-	glLightfv(GL_LIGHT1, GL_POSITION, light_pos);
-	glLightfv(GL_LIGHT1, GL_AMBIENT, l_Amb);
-	glLightfv(GL_LIGHT1, GL_DIFFUSE, cor1);
-	glLightfv(GL_LIGHT1, GL_SPECULAR, l_Esp);
-	glLightf(GL_LIGHT1,GL_CONSTANT_ATTENUATION,constAt);
-    glLightf(GL_LIGHT1,GL_LINEAR_ATTENUATION,linAt);
-    glLightf(GL_LIGHT1,GL_QUADRATIC_ATTENUATION,quadAt);
-    glLightf(GL_LIGHT0,GL_SPOT_CUTOFF, 90);
-  	glLightfv(GL_LIGHT0,GL_SPOT_DIRECTION, direction);
-  	glLightf(GL_LIGHT0,GL_SPOT_EXPONENT, 5.0);
-
-    if(night)
-    	glDisable(GL_LIGHT0);
-    else
-    	glEnable(GL_LIGHT0);
-
 }
 
 void init(void) {
@@ -361,8 +376,8 @@ void keyboard(unsigned char key, int x, int y){
 	//--------------------------- Zoom
 		case '+':
 		angZoom=angZoom+incZoom;
-		if (angZoom>150)
-			angZoom=150;
+		if (angZoom>300)
+			angZoom=300;
 		glutPostRedisplay();
 		break;
 	//--------------------------- Zoom
@@ -405,11 +420,11 @@ void keyboard(unsigned char key, int x, int y){
 		break;
 
 		case '5':
-		CubeRotation(1);
+		CubeRotation(2);
 		break;
 
 		case '2':
-		CubeRotation(2);
+		CubeRotation(1);
 		break;
 
 		case '1':

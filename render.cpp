@@ -9,136 +9,143 @@ Render::~Render(){}
 
 
 void Render::quadrado(GLfloat size, GLfloat x, GLfloat y, GLfloat z, int t){
-  glEnable(GL_TEXTURE_2D);
   glPushMatrix();
-  glColor3f(1, 1, 0);
+  glColor4f(1, 1, 0, 1);
   glRotatef(45, 1, 0, 0);
+  glRotatef(45, 0, 1, 0);
   glTranslatef(x,y,z);
-  glBindTexture(GL_TEXTURE_2D, textures[t]);
-  glBegin(GL_QUADS);
-  glTexCoord2f(0.0f,0.0f); glVertex3f(size/2, size/2, -size/2);
-  glTexCoord2f(1.0f,0.0f);glVertex3f(size/2, size/2, size/2);
-  glTexCoord2f(1.0f,1.0f);glVertex3f(size/2, -size/2, size/2);
-  glTexCoord2f(0.0f,1.0f); glVertex3f(size/2, -size/2, -size/2);
-  glEnd();
+  if( t ==1){
+    glBegin(GL_QUADS);
+    glVertex3f(0, size/2, -size/2);
+    glVertex3f(0, size/2, size/2);
+    glVertex3f(0, -size/2, size/2);
+    glVertex3f(0, -size/2, -size/2);
+    glEnd();
+  }
+  else if( t ==2){
 
+    glBegin(GL_QUADS);
+    glVertex3f(size/2, 0, -size/2);
+    glVertex3f(-size/2,0, -size/2);
+    glVertex3f(-size/2,0, size/2);
+    glVertex3f(size/2,0, size/2);
+    glEnd();
+  }
+  else if( t ==3){
 
-
-  glBegin(GL_QUADS);
-  glTexCoord2f(0.0f,0.0f);glVertex3f(size/2, size/2, -size/2);
-  glTexCoord2f(1.0f,0.0f);glVertex3f(-size/2, size/2, -size/2);
-  glTexCoord2f(1.0f,1.0f);glVertex3f(-size/2, size/2, size/2);
-  glTexCoord2f(0.0f,1.0f);glVertex3f(size/2, size/2, size/2);
-  glEnd();
-
-  glBegin(GL_QUADS);
-  glTexCoord2f(0.0f,0.0f);glVertex3f(size/2, size/2, size/2);
-  glTexCoord2f(1.0f,0.0f);glVertex3f(-size/2, size/2, size/2);
-  glTexCoord2f(1.0f,1.0f);glVertex3f(-size/2, -size/2, size/2);
-  glTexCoord2f(0.0f,1.0f);glVertex3f(size/2, -size/2, size/2);
-  glEnd();
-
-  glBegin(GL_QUADS);
-  glTexCoord2f(0.0f,0.0f); glVertex3f(-size/2, size/2, -size/2);
-  glTexCoord2f(1.0f,0.0f);glVertex3f(-size/2, size/2, size/2);
-  glTexCoord2f(1.0f,1.0f);glVertex3f(-size/2, -size/2, size/2);
-  glTexCoord2f(0.0f,1.0f);glVertex3f(-size/2, -size/2, -size/2);
-
-  glBegin(GL_QUADS);
-  glTexCoord2f(0.0f,0.0f);glVertex3f(size/2, -size/2, size/2);
-  glTexCoord2f(1.0f,0.0f);glVertex3f(-size/2, -size/2, size/2);
-  glTexCoord2f(1.0f,1.0f);glVertex3f(-size/2, -size/2, -size/2);
-  glTexCoord2f(0.0f,1.0f); glVertex3f(size/2, -size/2, -size/2);
-  glEnd();
-
-  glBegin(GL_QUADS);
-  glTexCoord2f(0.0f,0.0f);glVertex3f(size/2, -size/2, -size/2);
-  glTexCoord2f(1.0f,0.0f);glVertex3f(-size/2, -size/2, -size/2);
-  glTexCoord2f(1.0f,1.0f);glVertex3f(-size/2, size/2, -size/2);
-  glTexCoord2f(0.0f,1.0f);glVertex3f(size/2, size/2, -size/2);
-  glEnd();
-
-  glDisable(GL_TEXTURE_2D);
+    glBegin(GL_QUADS);
+    glVertex3f(size/2, size/2, 0);
+    glVertex3f(-size/2, size/2, 0);
+    glVertex3f(-size/2, -size/2, 0);
+    glVertex3f(size/2, -size/2, 0);
+    glEnd();
+  }
+  else if( t == 4){
+    glBegin(GL_QUADS);
+    glVertex3f(0, size/2, -size/2);
+    glVertex3f(0, size/2, size/2);
+    glVertex3f(0, -size/2, size/2);
+    glVertex3f(0, -size/2, -size/2);
+    glEnd();
+  }
+  else if( t == 5){
+    glBegin(GL_QUADS);
+    glVertex3f(size/2, 0, size/2);
+    glVertex3f(-size/2, 0, size/2);
+    glVertex3f(-size/2, 0, -size/2);
+    glVertex3f(size/2, 0, -size/2);
+    glEnd();
+  }
+  else {
+    glBegin(GL_QUADS);
+    glVertex3f(size/2, -size/2, 0);
+    glVertex3f(-size/2, -size/2, 0);
+    glVertex3f(-size/2, size/2, 0);
+    glVertex3f(size/2, size/2, 0);
+    glEnd();
+  }
   glPopMatrix();
 }
 
 
+
+
+
 void Render::manualDraw(GLfloat size){
   //left
-  GLfloat x = -size*3;
-  GLfloat y = -size*3;
-  GLfloat z = -size*3;
+  GLfloat x = -size/2*3;
+  GLfloat y = -size/2*3;
+  GLfloat z = -size/2*3;
   for(int j = 0 ; j < 6; j++){
     z=x;
     for(int k = 0; k < 6; k++){
-      quadrado(size, x, y, z, 5);
-      z = z+size;
+      quadrado(size, x, y, z, 1 );
+      z = z+size/2;
     }
-    y = y+size;
-
+    y = y+size/2;
   }
-  /*  //dir
-  x = size*3;
-  y = -size*3;
-  z = -size*3;
+    //dir
+  x = size/2*3;
+  y = -size/2*3;
+  z = -size/2*3;
   for(int j = 0 ; j < 6; j++){
     z=-x;
     for(int k = 0; k < 6; k++){
-      quadrado(size, x, y, z, 5);
-      z = z+size;
+      quadrado(size, x, y, z, 4);
+      z = z+size/2;
     }
-    y = y+size;
+    y = y+size/2;
 
   }
-  x = -size*3;
-  y = +size*3;
-  z = -size*3;
+  x = -size/2*3;
+  y = +size/2*3;
+  z = -size/2*3;
   for(int j = 0 ; j < 6; j++){
     z=-y;
     for(int k = 0; k < 6; k++){
-      quadrado(size, x, y, z, 5);
-      z = z+size;
+      quadrado(size, x, y, z, 2);
+      z = z+size/2;
     }
-    x = x+size;
+    x = x+size/2;
 
   }
-  x = -size*3;
-  y = -size*3;
-  z = -size*3;
+  x = -size/2*3;
+  y = -size/2*3;
+  z = -size/2*3;
   for(int j = 0 ; j < 6; j++){
     z=y;
     for(int k = 0; k < 6; k++){
       quadrado(size, x, y, z, 5);
-      z = z+size;
+      z = z+size/2;
     }
-    x = x+size;
+    x = x+size/2;
 
   }
-  x = -size*3;
-  y = -size*3;
-  z = +size*3;
+  x = -size/2*3;
+  y = -size/2*3;
+  z = +size/2*3;
   for(int j = 0 ; j < 6; j++){
     y=-z;
     for(int k = 0; k < 6; k++){
-      quadrado(size, x, y, z, 5);
-      y = y+size;
+      quadrado(size, x, y, z, 6);
+      y = y+size/2;
     }
-    x = x+size;
+    x = x+size/2;
   }
 
-  x = -size*3;
-  y = -size*3;
-  z = -size*3;
+  x = -size/2*3;
+  y = -size/2*3;
+  z = -size/2*3;
   for(int j = 0 ; j < 6; j++){
     y=z;
     for(int k = 0; k < 6; k++){
-      quadrado(size, x, y, z, 5);
-      y = y+size;
+      quadrado(size, x, y, z, 3);
+      y = y+size/2;
     }
-    x = x+size;
+    x = x+size/2;
 
   }
-*/
+
 
 }
 
@@ -149,6 +156,7 @@ void Render::drawInitial(GLfloat cube, GLfloat x, GLfloat y, GLfloat z){
   glTranslatef(x, y, z);
   glTranslatef(0,-1.5*cube, 0);
   glBegin(GL_QUADS);
+  glNormal3f(0.0,-1.0,0.0);
   glTexCoord2f(0.0f,0.0f);glVertex3f(-1.5*cube, 0, -1.5*cube);
   glTexCoord2f(3.0f,0.0f);glVertex3f(-1.5*cube, 0, 1.5*cube);
   glTexCoord2f(3.0f,3.0f);glVertex3f(1.5*cube, 0, 1.5*cube);
@@ -161,6 +169,7 @@ void Render::drawInitial(GLfloat cube, GLfloat x, GLfloat y, GLfloat z){
   glTranslatef(x, y, z);
   glTranslatef(0,1.5*cube, 0);
   glBegin(GL_QUADS);
+  glNormal3f(0.0,1.0,0.0);
   glTexCoord2f(0.0f,0.0f);glVertex3f(-1.5*cube, 0, -1.5*cube);
   glTexCoord2f(3.0f,0.0f);glVertex3f(-1.5*cube, 0, 1.5*cube);
   glTexCoord2f(3.0f,3.0f);glVertex3f(1.5*cube, 0, 1.5*cube);
@@ -172,6 +181,7 @@ void Render::drawInitial(GLfloat cube, GLfloat x, GLfloat y, GLfloat z){
   glTranslatef(x, y, z);
   glTranslatef(0,0,1.5*cube);
   glBegin(GL_QUADS);
+  glNormal3f(0.0,0.0,1.0);
   glTexCoord2f(0.0f,0.0f);glVertex3f(-1.5*cube, -1.5*cube, 0);
   glTexCoord2f(3.0f,0.0f);glVertex3f(-1.5*cube, 1.5*cube, 0);
   glTexCoord2f(3.0f,3.0f);glVertex3f(1.5*cube, 1.5*cube, 0);
@@ -183,6 +193,7 @@ void Render::drawInitial(GLfloat cube, GLfloat x, GLfloat y, GLfloat z){
   glTranslatef(x, y, z);
   glTranslatef(0,0,-1.5*cube);
   glBegin(GL_QUADS);
+  glNormal3f(0.0,0.0,-1.0);
   glTexCoord2f(0.0f,0.0f);glVertex3f(-1.5*cube, -1.5*cube, 0);
   glTexCoord2f(3.0f,0.0f);glVertex3f(-1.5*cube, 1.5*cube, 0);
   glTexCoord2f(3.0f,3.0f);glVertex3f(1.5*cube, 1.5*cube, 0);
@@ -194,6 +205,7 @@ void Render::drawInitial(GLfloat cube, GLfloat x, GLfloat y, GLfloat z){
   glTranslatef(x, y, z);
   glTranslatef(1.5*cube,0,0);
   glBegin(GL_QUADS);
+  glNormal3f(1.0,0.0,0.0);
   glTexCoord2f(0.0f,0.0f); glVertex3f(0, -1.5*cube, -1.5*cube);
   glTexCoord2f(3.0f,0.0f);glVertex3f(0,-1.5*cube, 1.5*cube);
   glTexCoord2f(3.0f,3.0f);glVertex3f(0, 1.5*cube, 1.5*cube);
@@ -205,6 +217,7 @@ void Render::drawInitial(GLfloat cube, GLfloat x, GLfloat y, GLfloat z){
   glTranslatef(x, y, z);
   glTranslatef(-1.5*cube, 0, 0);
   glBegin(GL_QUADS);
+  glNormal3f(-1.0,0.0,0.0);
   glTexCoord2f(0.0f,0.0f); glVertex3f(0, -1.5*cube, -1.5*cube);
   glTexCoord2f(3.0f,0.0f);glVertex3f(0, -1.5*cube, 1.5*cube);
   glTexCoord2f(3.0f,3.0f);glVertex3f(0, 1.5*cube, 1.5*cube);
@@ -214,42 +227,6 @@ void Render::drawInitial(GLfloat cube, GLfloat x, GLfloat y, GLfloat z){
   glDisable(GL_TEXTURE_2D);
 
 }
-
-void Render::drawBlend(){
-  glBegin (GL_TRIANGLES);
-      glColor4f(1.0, 1.0, 0.0, 1.0);
-      glVertex3f(0.1, 0.9, 0.0); 
-      glVertex3f(0.1, 0.1, 0.0); 
-      glVertex3f(0.7, 0.5, 0.0); 
-   glEnd();
-   glBegin (GL_TRIANGLES);
-      glColor4f(0.0, 1.0, 1.0, 0.5);
-      glVertex3f(0.9, 0.9, 0.0); 
-      glVertex3f(0.3, 0.5, 0.0); 
-      glVertex3f(0.9, 0.1, 0.0); 
-   glEnd();
-}
-
-/*void Render::drawField(){
-  GLfloat d = 50.0;
-  glPushMatrix();
-    glNormal3f(0.0, 1.0, 0.0);
-    glBegin(GL_QUADS);
-      glColor4f(VERDE);
-      glVertex3f(-d,-d, -d);
-      glVertex3f(d, -d, -d);
-      glVertex3f(d, -d, d);
-      glVertex3f(-d, -d, d);
-    glEnd();
-    glBegin(GL_QUADS);
-      glColor4f(WHITE);
-      glVertex3f(-5,-d, 0);
-      glVertex3f(0, -d, -5);
-      glVertex3f(5, -d, 0);
-      glVertex3f(0, -d, 5);
-    glEnd();
-  glPopMatrix();
-}*/
 
 void Render::drawSkybox(int d){
   d/=2;

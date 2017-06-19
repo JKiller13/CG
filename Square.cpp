@@ -1,6 +1,6 @@
 #include "square.hpp"
 #include <stdio.h>
-#include "math.h"
+#include <math.h>
 
 Square::Square(){}
 
@@ -84,6 +84,7 @@ void Square::move(GLfloat posCubeX, GLfloat posCubeY, GLfloat posCubeZ){
 }
 
 void Square::cubeMove(int side){
+        printf("cube move x %f\ny %f\nz %f\n",x, y, z );
     if(side == 1){
         y = y+size;  
     }
@@ -102,6 +103,8 @@ void Square::cubeMove(int side){
     else if(side == 6){
         z = z-size;      
     }
+        printf("move to x %f\ny %f\nz %f\n",x, y, z );
+
 }
 
 
@@ -110,34 +113,18 @@ void Square::cubeMove(int side){
 void Square::rotation(int side, GLfloat posCubeX, GLfloat posCubeY, GLfloat posCubeZ){
     GLfloat aux;
     if(side == 1){//torno z
-        aux = z;
-        z = -y;
-        y = aux;
+       GLfloat coss = 0;
+       GLfloat sen = 1;
 
-        if(cubeside < 1){
-            cubeside = 0.9;//dir
-        }
-        else if(cubeside < 2){//t2ras
-            cubeside = 5.9;
-        }
-        else if(cubeside < 3){
-            cubeside = 1.9;//cima
-        } 
-        else if(cubeside < 4){
-            cubeside = 3.9;//esq
-        }
-        else if(cubeside < 5){
-            cubeside = 2.9;//frente
-        }
-        else {
-            cubeside = 4.9;//baixo
-        }
-    }
-    else if(side == 2){//torno z
-        aux = -z;
-        z = y;
-        y = aux;
+        printf("posx %f\nposy %f\nposz %f\n",posCubeX, posCubeY, posCubeZ );
+               printf("int x %f\ny %f\nz %f\n\n\n\n\n",x, y, z );
 
+        aux =  (y+ posCubeY) *coss - (z- posCubeZ)*sen;
+        z =  posCubeZ + (y- posCubeY)*sen + (z- posCubeZ)*coss;
+        y = aux +posCubeY;
+
+        
+        printf("x %f\ny %f\nz %f\n\n\n\n\n",x, y, z );
         if(cubeside < 1){
             cubeside = 0.9;//dir
         }
@@ -158,13 +145,45 @@ void Square::rotation(int side, GLfloat posCubeX, GLfloat posCubeY, GLfloat posC
         else {
             cubeside = 1.9;//cima
         }
+        
+    }
+    else if(side == 2){//torno z
+
+       GLfloat coss = 0;
+       GLfloat sen = -1;
+
+        aux =  (y+ posCubeY) *coss - (z- posCubeZ)*sen;
+        z =  posCubeZ + (y- posCubeY)*sen + (z- posCubeZ)*coss;
+        y = aux +posCubeY;
+
+        if(cubeside < 1){
+            cubeside = 0.9;//dir
+        }
+        else if(cubeside < 2){//t2ras
+            cubeside = 5.9;
+        }
+        else if(cubeside < 3){
+            cubeside = 1.9;//cima
+        } 
+        else if(cubeside < 4){
+            cubeside = 3.9;//esq
+        }
+        else if(cubeside < 5){
+            cubeside = 2.9;//frente
+        }
+        else {
+            cubeside = 4.9;//baixo
+        }
+
 
     }
     else if(side == 3){//torno y
-        aux = -x;
-        x = z;
-        z = aux;   
 
+       GLfloat coss = 0;
+       GLfloat sen = -1;
+        aux =  ( posCubeX -x )*coss - ( posCubeZ -z )*sen;
+        z =  posCubeZ+ ( posCubeX -x )*sen + ( posCubeZ -z )*coss;
+        x = aux + posCubeX;
         if(cubeside < 1){
             cubeside = 2.9;//frente
         }
@@ -185,9 +204,13 @@ void Square::rotation(int side, GLfloat posCubeX, GLfloat posCubeY, GLfloat posC
         }
     }
     else {//torno y
-        aux = x;
-        x = -z;
-        z = aux;  
+
+       GLfloat coss = 0;
+       GLfloat sen = 1;
+
+        aux =  ( posCubeX -x )*coss - ( posCubeZ -z )*sen;
+        z =  posCubeZ+ ( posCubeX -x )*sen + ( posCubeZ -z )*coss;
+        x = aux + posCubeX;
         if(cubeside < 1){
             cubeside = 5.9;//tras
         }
@@ -216,6 +239,7 @@ void Square::draw(){
     bool check = false;
     glEnable(GL_TEXTURE_2D);
     glPushMatrix();
+    glColor4f(1, 1, 1, 1);
     glTranslatef(x,y,z);
     if(cubeside < 1 && check !=true){//ok
         glBindTexture(GL_TEXTURE_2D,textures[textn]);
