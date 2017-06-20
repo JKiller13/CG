@@ -84,7 +84,7 @@ void Square::move(GLfloat posCubeX, GLfloat posCubeY, GLfloat posCubeZ){
 }
 
 void Square::cubeMove(int side){
-        printf("cube move x %f\ny %f\nz %f\n",x, y, z );
+    printf("cube move x %f\ny %f\nz %f\n",x, y, z );
     if(side == 1){
         y = y+size;  
     }
@@ -103,7 +103,7 @@ void Square::cubeMove(int side){
     else if(side == 6){
         z = z-size;      
     }
-        printf("move to x %f\ny %f\nz %f\n",x, y, z );
+    printf("move to x %f\ny %f\nz %f\n",x, y, z );
 
 }
 
@@ -112,18 +112,17 @@ void Square::cubeMove(int side){
 
 void Square::rotation(int side, GLfloat posCubeX, GLfloat posCubeY, GLfloat posCubeZ){
     GLfloat aux;
-    printf("rot %d\n", side);
     if(side == 1){//torno z
-       GLfloat coss = 0;
-       GLfloat sen = 1;
-        printf("z %f\ny %f\n",z, y );
+     GLfloat coss = 0;
+     GLfloat sen = 1;
+     printf("z %f\ny %f\n",z, y );
 
-        aux =  (y+ posCubeY) *coss - (z- posCubeZ)*sen;
-        z =  posCubeZ + (y- posCubeY)*sen + (z- posCubeZ)*coss;
-        y = aux +posCubeY;
-        printf("z %f\ny %f\n",z, y );
-
-        if(cubeside < 1){
+     aux =  (y+ posCubeY) *coss - (z- posCubeZ)*sen;
+     z =  posCubeZ + (y- posCubeY)*sen + (z- posCubeZ)*coss;
+     y = aux +posCubeY;
+     printf("z %f\ny %f\n",z, y );
+     if(!exterior){
+         if(cubeside < 1){
             cubeside = 0.9;//dir
         }
         else if(cubeside < 2){
@@ -143,18 +142,30 @@ void Square::rotation(int side, GLfloat posCubeX, GLfloat posCubeY, GLfloat posC
         else {
             cubeside = 1.9;//cima
         }
-        
     }
+    else{
+        if(cubeside < 2){
+            printf("111111111111111\n");
+            cubeside = 5.2;
+        }
+        else if(cubeside < 4){
+            cubeside = 1.2;
+        }
+        else if(cubeside < 6){
+            cubeside = 3.2;
+        }
+    }
+}
     else if(side == 2){//torno z
 
-       GLfloat coss = 0;
-       GLfloat sen = -1;
+     GLfloat coss = 0;
+     GLfloat sen = -1;
 
-        aux =  (y+ posCubeY) *coss - (z- posCubeZ)*sen;
-        z =  posCubeZ + (y- posCubeY)*sen + (z- posCubeZ)*coss;
-        y = aux +posCubeY;
-
-        if(cubeside < 1){
+     aux =  (y+ posCubeY) *coss - (z- posCubeZ)*sen;
+     z =  posCubeZ + (y- posCubeY)*sen + (z- posCubeZ)*coss;
+     y = aux +posCubeY;
+     if(!exterior){
+         if(cubeside < 1){
             cubeside = 0.9;//dir
         }
         else if(cubeside < 2){//t2ras
@@ -172,17 +183,30 @@ void Square::rotation(int side, GLfloat posCubeX, GLfloat posCubeY, GLfloat posC
         else {
             cubeside = 4.9;//baixo
         }
-
-
     }
+    else{
+            printf("22222222222\n");
+        if(cubeside < 2){
+            //cubeside = 3.2;
+        }
+        else if(cubeside < 4){
+           // cubeside = 1.2;
+        }
+        else if(cubeside < 6){
+           // cubeside = 5.2;
+        }
+    }
+
+}
     else if(side == 3){//torno y
 
-       GLfloat coss = 0;
-       GLfloat sen = -1;
-        aux =  ( posCubeX -x )*coss - ( posCubeZ -z )*sen;
-        z =  posCubeZ+ ( posCubeX -x )*sen + ( posCubeZ -z )*coss;
-        x = aux + posCubeX;
-        if(cubeside < 1){
+     GLfloat coss = 0;
+     GLfloat sen = -1;
+     aux =  ( posCubeX -x )*coss - ( posCubeZ -z )*sen;
+     z =  posCubeZ+ ( posCubeX -x )*sen + ( posCubeZ -z )*coss;
+     x = aux + posCubeX;
+     if(!exterior){
+         if(cubeside < 1){
             cubeside = 2.9;//frente
         }
         else if(cubeside < 2){
@@ -201,42 +225,29 @@ void Square::rotation(int side, GLfloat posCubeX, GLfloat posCubeY, GLfloat posC
             cubeside = 0.9;//dir
         }
     }
+    else{
+        if(cubeside < 2){
+            printf("3333333333333\n");
+            cubeside = 5.2;
+        }
+        else if(cubeside < 4){
+            cubeside = 1.2;
+        }
+        else if(cubeside < 6){
+            cubeside = 3.2;
+        }
+    }
+}
     else if(side == 4){//torno y
 
-       GLfloat coss = 0;
-       GLfloat sen = 1;
+     GLfloat coss = 0;
+     GLfloat sen = 1;
 
-        aux =  ( posCubeX -x )*coss - ( posCubeZ -z )*sen;
-        z =  posCubeZ+ ( posCubeX -x )*sen + ( posCubeZ -z )*coss;
-        x = aux + posCubeX;
-        if(cubeside < 1){
-            cubeside = 5.9;//tras
-        }
-        else if(cubeside < 2){
-            cubeside = 1.9;//cima
-        }
-        else if(cubeside < 3){
-            cubeside = 0.9;//dir
-        } 
-        else if(cubeside < 4){
-            cubeside = 2.9;//frente
-        }
-        else if(cubeside < 5){
-            cubeside = 4.9;//baixo
-        }
-        else {
-            cubeside = 3.9;//esq
-        } 
-    }  
-        else if(side == 5){//torno y
-
-       GLfloat coss = 0;
-       GLfloat sen = -1;
-
-        aux =  ( posCubeX -x )*coss - ( posCubeY -y )*sen;
-        y =  posCubeY+ ( posCubeX -x )*sen + ( posCubeY -y )*coss;
-        x = aux + posCubeX;
-        if(cubeside < 1){
+     aux =  ( posCubeX -x )*coss - ( posCubeZ -z )*sen;
+     z =  posCubeZ+ ( posCubeX -x )*sen + ( posCubeZ -z )*coss;
+     x = aux + posCubeX;
+     if(!exterior){
+         if(cubeside < 1){
             cubeside = 5.9;//tras
         }
         else if(cubeside < 2){
@@ -255,15 +266,29 @@ void Square::rotation(int side, GLfloat posCubeX, GLfloat posCubeY, GLfloat posC
             cubeside = 3.9;//esq
         } 
     }
-        else if(side == 6){//torno y
+    else{
+        if(cubeside < 2){
+            printf("44444444444444\n");
+            cubeside = 5.2;
+        }
+        else if(cubeside < 4){
+            cubeside = 1.2;
+        }
+        else if(cubeside < 6){
+            cubeside = 3.2;
+        }
+    }
+}  
+        else if(side == 5){//torno y
 
-       GLfloat coss = 0;
-       GLfloat sen = 1;
+         GLfloat coss = 0;
+         GLfloat sen = -1;
 
-        aux =  ( posCubeX -x )*coss - ( posCubeY -y )*sen;
-        y =  posCubeY+ ( posCubeX -x )*sen + ( posCubeY -y )*coss;
-        x = aux + posCubeX;
-        if(cubeside < 1){
+         aux =  ( posCubeX -x )*coss - ( posCubeY -y )*sen;
+         y =  posCubeY+ ( posCubeX -x )*sen + ( posCubeY -y )*coss;
+         x = aux + posCubeX;
+         if(!exterior){
+             if(cubeside < 1){
             cubeside = 5.9;//tras
         }
         else if(cubeside < 2){
@@ -281,7 +306,62 @@ void Square::rotation(int side, GLfloat posCubeX, GLfloat posCubeY, GLfloat posC
         else {
             cubeside = 3.9;//esq
         } 
-    }  
+    }
+    else{
+        if(cubeside < 2){
+            printf("55555555555555\n");
+            cubeside = 5.2;
+        }
+        else if(cubeside < 4){
+            cubeside = 1.2;
+        }
+        else if(cubeside < 6){
+            cubeside = 3.2;
+        }
+    }
+}
+        else if(side == 6){//torno y
+
+         GLfloat coss = 0;
+         GLfloat sen = 1;
+
+         aux =  ( posCubeX -x )*coss - ( posCubeY -y )*sen;
+         y =  posCubeY+ ( posCubeX -x )*sen + ( posCubeY -y )*coss;
+         x = aux + posCubeX;
+         if(!exterior){
+            if(cubeside < 1){
+            cubeside = 5.9;//tras
+        }
+        else if(cubeside < 2){
+                cubeside = 1.9;//cima
+            }
+            else if(cubeside < 3){
+                cubeside = 0.9;//dir
+            } 
+            else if(cubeside < 4){
+                cubeside = 2.9;//frente
+            }
+            else if(cubeside < 5){
+                cubeside = 4.9;//baixo
+            }
+            else {
+                cubeside = 3.9;//esq
+            } 
+        }
+        else{
+            if(cubeside < 2){
+                printf("666666666666666\n");
+                cubeside = 5.2;
+            }
+            else if(cubeside < 4){
+                cubeside = 1.2;
+            }
+            else if(cubeside < 6){
+                cubeside = 3.2;
+            }
+        }
+
+    }    
 
 }
 void Square::drawOneFace(){

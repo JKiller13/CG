@@ -174,6 +174,7 @@ void Render::manualDraw(GLfloat size){
   x = -cord;
   y = -cord;
   z = -cord;
+  
   for(int j = 0 ; j < 6; j++){
     y=z;
 
@@ -205,7 +206,6 @@ void Render::outCubeRotation(int axe, int h){
     for(int j = 0; j < limit; j++){
         if(axe == 1){
           if(outSquare[i][j].x == h){
-  printf("esta\n");
             outSquare[i][j].rotation(1, 0,0,0);
           }
         }
@@ -386,7 +386,7 @@ void Render::drawSkybox(int d){
 
 void Render::loadAllTextures(){
   char bmpSkybox[5][30]={"skyrender0001.bmp","skyrender0002.bmp","skyrender0003.bmp","skyrender0004.bmp","skyrender0005.bmp"};
-  char bmpText[8][30]={"cim.bmp", "lava.bmp", "pista.bmp", "wall2.bmp", "grass.bmp", "rocks.bmp", "ground.bmp"};
+  char bmpText[8][30]={"cim.bmp", "lava.bmp", "pista.bmp", "wall2.bmp", "grass.bmp", "rocks.bmp", "ground.bmp", "images.bmp"};
   int i;
   for(i=0;i<5;i++)
     loadSkyboxTexture(bmpSkybox[i],i,skyboxtex);

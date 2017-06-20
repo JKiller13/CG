@@ -42,9 +42,9 @@ public:
   bool exterior = false;
   GLfloat cubeside = 0;
   GLfloat faceside = 0;
-  int texturesn = 7;
-  char tpath[7][30] = {"cim.bmp", "wall2.bmp", "pista.bmp", "lava.bmp", "grass.bmp", "rocks.bmp", "ground.bmp"};
-  GLuint textures[7];
+  int texturesn = 8;
+  char tpath[8][30] = {"cim.bmp", "wall2.bmp", "pista.bmp", "lava.bmp", "grass.bmp", "rocks.bmp", "ground.bmp", "images.bmp"};
+  GLuint textures[8];
   RgbImage imag;
   void rotation(int side, GLfloat posCubeX, GLfloat posCubeY, GLfloat posCubeZ);
   void move(GLfloat posCubeX, GLfloat posCubeY, GLfloat posCubeZ);
