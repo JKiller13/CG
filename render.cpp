@@ -23,6 +23,7 @@ void Render::quadrado(GLfloat size, GLfloat x, GLfloat y, GLfloat z, int t){
   glTranslatef(x,y,z);
   if( t ==1){
     glBegin(GL_QUADS);
+    //glNormal3f(1.0,0.0,0.0);
     glVertex3f(0, size/2, -size/2);
     glVertex3f(0, size/2, size/2);
     glVertex3f(0, -size/2, size/2);
@@ -30,8 +31,8 @@ void Render::quadrado(GLfloat size, GLfloat x, GLfloat y, GLfloat z, int t){
     glEnd();
   }
   else if( t ==2){
-
     glBegin(GL_QUADS);
+    //glNormal3f(0.0,-1.0,0.0);
     glVertex3f(size/2, 0, -size/2);
     glVertex3f(-size/2,0, -size/2);
     glVertex3f(-size/2,0, size/2);
@@ -39,8 +40,8 @@ void Render::quadrado(GLfloat size, GLfloat x, GLfloat y, GLfloat z, int t){
     glEnd();
   }
   else if( t ==3){
-
     glBegin(GL_QUADS);
+    //glNormal3f(0.0,0.0,1.0);
     glVertex3f(size/2, size/2, 0);
     glVertex3f(-size/2, size/2, 0);
     glVertex3f(-size/2, -size/2, 0);
@@ -49,6 +50,7 @@ void Render::quadrado(GLfloat size, GLfloat x, GLfloat y, GLfloat z, int t){
   }
   else if( t == 4){
     glBegin(GL_QUADS);
+    //glNormal3f(-1.0,0.0,0.0);
     glVertex3f(0, size/2, -size/2);
     glVertex3f(0, size/2, size/2);
     glVertex3f(0, -size/2, size/2);
@@ -57,6 +59,7 @@ void Render::quadrado(GLfloat size, GLfloat x, GLfloat y, GLfloat z, int t){
   }
   else if( t == 5){
     glBegin(GL_QUADS);
+    //glNormal3f(0.0,1.0,0.0);
     glVertex3f(size/2, 0, size/2);
     glVertex3f(-size/2, 0, size/2);
     glVertex3f(-size/2, 0, -size/2);
@@ -65,6 +68,7 @@ void Render::quadrado(GLfloat size, GLfloat x, GLfloat y, GLfloat z, int t){
   }
   else {
     glBegin(GL_QUADS);
+    //glNormal3f(0.0,0.0,-1.0);
     glVertex3f(size/2, -size/2, 0);
     glVertex3f(-size/2, -size/2, 0);
     glVertex3f(-size/2, size/2, 0);
@@ -380,6 +384,17 @@ void Render::drawSkybox(int d){
   glTexCoord2f(1.0,1.0);glVertex3f(-d, d, d);
   glTexCoord2f(0.0,1.0);glVertex3f(-d, d, -d);
   glEnd();
+
+  glBindTexture(GL_TEXTURE_2D,textures[4]); //down    
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);    
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);    
+  glBegin(GL_QUADS);    
+  glTexCoord2f(1.0,0.0);glVertex3f(d, -d, -d);    
+  glTexCoord2f(0.0,0.0);glVertex3f(-d, -d, -d);   
+  glTexCoord2f(1.0,1.0);glVertex3f(-d, -d, d);    
+  glTexCoord2f(0.0,1.0);glVertex3f(d, -d, d);   
+  glEnd();
+  
   glPopMatrix();
   glDisable(GL_TEXTURE_2D);
 }

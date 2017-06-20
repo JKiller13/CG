@@ -205,49 +205,54 @@ void timer(int) {
 }
 
 
-void initLights(){		
-	if(night){		
-		ambientColor[0] = 0.2f;		
-		ambientColor[1] = 0.2f;		
-		ambientColor[2] = 0.2f;		
-	}		
-	else{		
-		ambientColor[0] = 0.8f;		
-		ambientColor[1] = 0.8f;		
-		ambientColor[2] = 0.8f;		
-	}		
-	ambientColor[3] = 1.0;		
-	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, ambientColor);		
-	lightPos[0] = 0.0;		
-	lightPos[1] = 50.0;		
-	lightPos[2] = 0.0;		
-	lightPos[2] = 1.0;		
-	glEnable(GL_LIGHT0);		
-	glLightfv(GL_LIGHT0, GL_POSITION, lightPos);		
-	glLightfv(GL_LIGHT0, GL_AMBIENT, l_Amb);		
-	glLightfv(GL_LIGHT0, GL_DIFFUSE, l_Dif);		
-	glLightfv(GL_LIGHT0, GL_SPECULAR, l_Esp);		
-	glLightf(GL_LIGHT0,GL_CONSTANT_ATTENUATION,constAt);		
-	glLightf(GL_LIGHT0,GL_LINEAR_ATTENUATION,linAt);		
-	glLightf(GL_LIGHT0,GL_QUADRATIC_ATTENUATION,quadAt);		
-	//square light		
-	GLfloat cor1[4]={1.0,1.0,1.0,1.0};		
-    GLfloat angle = 1;		
-    GLfloat exp = 0.5;		
-	glLightfv(GL_LIGHT1, GL_AMBIENT, l_Amb);		
-	glLightfv(GL_LIGHT1, GL_DIFFUSE, cor1);		
-	glLightfv(GL_LIGHT1, GL_SPECULAR, cor1);		
-	glLightf(GL_LIGHT1,GL_CONSTANT_ATTENUATION,constAt);		
-    glLightf(GL_LIGHT1,GL_LINEAR_ATTENUATION,linAt);		
-    glLightf(GL_LIGHT1,GL_QUADRATIC_ATTENUATION,quadAt);		
-    glLightf(GL_LIGHT0,GL_SPOT_CUTOFF, angle);		
-  	glLightf(GL_LIGHT0,GL_SPOT_EXPONENT, exp);		
-    if(night){		
-    	glDisable(GL_LIGHT0);		
-    }		
-    else{		
-    	glEnable(GL_LIGHT0);		
-    }		
+void initLights(){
+	if(night){
+		ambientColor[0] = 0.2f;
+		ambientColor[1] = 0.2f;
+		ambientColor[2] = 0.2f;
+	}
+	else{
+		ambientColor[0] = 0.8f;
+		ambientColor[1] = 0.8f;
+		ambientColor[2] = 0.8f;
+	}
+	ambientColor[3] = 1.0;
+
+	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, ambientColor);
+
+	lightPos[0] = -38.0;
+	lightPos[1] = 50.0;
+	lightPos[2] = 38.0;
+	lightPos[3] = 1.0;
+
+	glEnable(GL_LIGHT0);
+	glLightfv(GL_LIGHT0, GL_POSITION, lightPos);
+	glLightfv(GL_LIGHT0, GL_AMBIENT, l_Amb);
+	glLightfv(GL_LIGHT0, GL_DIFFUSE, l_Dif);
+	glLightfv(GL_LIGHT0, GL_SPECULAR, l_Esp);
+	glLightf(GL_LIGHT0,GL_CONSTANT_ATTENUATION,constAt);
+	glLightf(GL_LIGHT0,GL_LINEAR_ATTENUATION,linAt);
+	glLightf(GL_LIGHT0,GL_QUADRATIC_ATTENUATION,quadAt);
+
+	//square light
+	GLfloat cor1[4]={1.0,1.0,1.0,1.0};
+    GLfloat angle = 0;
+    GLfloat exp = 20;
+	glLightfv(GL_LIGHT1, GL_AMBIENT, l_Amb);
+	glLightfv(GL_LIGHT1, GL_DIFFUSE, cor1);
+	glLightfv(GL_LIGHT1, GL_SPECULAR, cor1);
+	glLightf(GL_LIGHT1,GL_CONSTANT_ATTENUATION,constAt);
+    glLightf(GL_LIGHT1,GL_LINEAR_ATTENUATION,linAt);
+    glLightf(GL_LIGHT1,GL_QUADRATIC_ATTENUATION,quadAt);
+    glLightf(GL_LIGHT0,GL_SPOT_CUTOFF, angle);
+  	glLightf(GL_LIGHT0,GL_SPOT_EXPONENT, exp);
+
+    if(night){
+    	glDisable(GL_LIGHT0);
+    }
+    else{
+    	glEnable(GL_LIGHT0);
+    }
 }
 
 void display(void){
@@ -435,15 +440,16 @@ void keyboard(unsigned char key, int x, int y){
 void teclasNotAscii(int key, int x, int y){
 	if(key == GLUT_KEY_UP || key == GLUT_KEY_DOWN) {
 
-		if(key == GLUT_KEY_UP) 
-			aVisao = (aVisao + 0.2) ;
-		if(key == GLUT_KEY_DOWN) 
-			aVisao = (aVisao - 0.2) ;
-
-		obsP[1]=rVisao*cos(aVisao);
-		obsP[2]=rVisao*sin(aVisao);
+		if(key == GLUT_KEY_UP){
+			obsP[1]+=1;
+			if(obsP[1]>50)obsP[1]=50;
+		}
+		if(key == GLUT_KEY_DOWN){ 
+			obsP[1]-=1;
+			if(obsP[1]<-50)obsP[1]=-50;
+		}
 	}
-	else{
+	else if(key == GLUT_KEY_LEFT || key == GLUT_KEY_RIGHT){
 		if(key == GLUT_KEY_LEFT) 
 			aVisao = (aVisao + 0.2) ;
 		if(key == GLUT_KEY_RIGHT) 
