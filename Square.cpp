@@ -123,7 +123,7 @@ void Square::rotation(int side, GLfloat posCubeX, GLfloat posCubeY, GLfloat posC
      printf("z %f\ny %f\n",z, y );
      if(!exterior){
          if(cubeside < 1){
-            cubeside = 0.9;//dir
+            cubeside = 1.9;//dir
         }
         else if(cubeside < 2){
             cubeside = 2.9;//frente
@@ -143,16 +143,25 @@ void Square::rotation(int side, GLfloat posCubeX, GLfloat posCubeY, GLfloat posC
             cubeside = 1.9;//cima
         }
     }
-    else{
-        if(cubeside < 2){
-            printf("111111111111111\n");
-            cubeside = 5.2;
+   else{
+            printf("11111111111111\n");
+        if(cubeside < 1){//nada
+            cubeside = 0.2;
         }
-        else if(cubeside < 4){
+        else if(cubeside < 2){
             cubeside = 1.2;
         }
-        else if(cubeside < 6){
+        else if(cubeside <3){//ok
+            cubeside = 4.2;
+        }
+        else if(cubeside < 4){//ok
+            cubeside = 5.2;
+        }
+        else if(cubeside < 5){//ok
             cubeside = 3.2;
+        }
+        else if(cubeside < 6){//ok
+            cubeside = 2.2;
         }
     }
 }
@@ -184,16 +193,25 @@ void Square::rotation(int side, GLfloat posCubeX, GLfloat posCubeY, GLfloat posC
             cubeside = 4.9;//baixo
         }
     }
-    else{
-            printf("22222222222\n");
-        if(cubeside < 2){
-            //cubeside = 3.2;
+   else{
+            printf("2222222222222222\n");
+        if(cubeside < 1){//nada
+            cubeside = 1.2;
         }
-        else if(cubeside < 4){
-           // cubeside = 1.2;
+        else if(cubeside < 2){
+            cubeside = 5.2;
         }
-        else if(cubeside < 6){
-           // cubeside = 5.2;
+        else if(cubeside <3){//ok
+            cubeside = 4.2;
+        }
+        else if(cubeside < 4){//ok
+            cubeside = 5.2;
+        }
+        else if(cubeside < 5){//ok
+            cubeside = 3.2;
+        }
+        else if(cubeside < 6){//ok
+            cubeside = 2.2;
         }
     }
 
@@ -226,15 +244,24 @@ void Square::rotation(int side, GLfloat posCubeX, GLfloat posCubeY, GLfloat posC
         }
     }
     else{
-        if(cubeside < 2){
-            printf("3333333333333\n");
+            printf("55555555555555\n");
+        if(cubeside < 1){//okk
+            cubeside = 4.2;
+        }
+        else if(cubeside < 2){//ok
             cubeside = 5.2;
         }
-        else if(cubeside < 4){
+        else if(cubeside <3){
+            cubeside = 2.2;
+        }
+        else if(cubeside < 4){//nada
+            cubeside = 3.2;
+        }
+        else if(cubeside < 5){//okk
             cubeside = 1.2;
         }
-        else if(cubeside < 6){
-            cubeside = 3.2;
+        else if(cubeside < 6){//okk
+            cubeside = 0.2;
         }
     }
 }
@@ -308,15 +335,24 @@ void Square::rotation(int side, GLfloat posCubeX, GLfloat posCubeY, GLfloat posC
         } 
     }
     else{
-        if(cubeside < 2){
-            printf("55555555555555\n");
-            cubeside = 5.2;
+        if(cubeside < 1){//ok
+            cubeside = 2.2;
         }
-        else if(cubeside < 4){
+        else if(cubeside < 2){
+            printf("55555555555555\n");
+            cubeside = 3.2;
+        }
+        else if(cubeside <3){
             cubeside = 1.2;
         }
-        else if(cubeside < 6){
-            cubeside = 3.2;
+        else if(cubeside < 4){//ok
+            cubeside = 0.2;
+        }
+        else if(cubeside < 5){//nada
+            cubeside = 1.2;
+        }
+        else if(cubeside < 6){//nada
+            cubeside = 1.2;
         }
     }
 }
