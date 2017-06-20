@@ -38,6 +38,8 @@ GLfloat sizeprincipal[6][6]= {1.5*cube};
 
 //small cubes
 
+GLfloat fogInten= 0.01;
+
 
 Square allsquares[100];
 Square square;
@@ -295,7 +297,7 @@ void display(void){
  	glFogi(GL_FOG_MODE, GL_EXP); //Equacao do nevoeiro - linear		
  	glFogf(GL_FOG_START, 40.0); // Distancia a que tera inicio o nevoeiro		
  	glFogf(GL_FOG_END, 60.0); // Distancia a que o nevoeiro terminar		
- 	glFogf (GL_FOG_DENSITY, 0.10);		
+ 	glFogf (GL_FOG_DENSITY, fogInten);		
  	if(fog)		
  		glEnable(GL_FOG);		
  	else		
@@ -426,6 +428,21 @@ void keyboard(unsigned char key, int x, int y){
 		case 'N':
 			night=!night;
 		break;
+		case '4':
+			fogInten-=0.005;
+		break;	
+		case '6':
+			fogInten+=0.005;
+		break;	
+
+
+	//----------------------------transparencias
+		case '7':
+			render.trans-=0.1;
+		break;	
+		case '9':
+			render.trans+=0.1;
+		break;	
 
 	//--------------------------- Escape
 		case 27:

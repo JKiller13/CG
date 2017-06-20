@@ -32,6 +32,7 @@ public:
 	GLuint textures[8];
 	GLuint skyboxtex[5];
   	Square outSquare[6][6*6];
+    GLfloat trans = 0.5;
 	void loadAllTextures();
   	void drawSkybox(int d);
   	void drawS();
