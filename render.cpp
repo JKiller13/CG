@@ -107,7 +107,7 @@ void Render::manualDraw(GLfloat size){
 
   //left
   int i =0;
-  int cord = 18;
+  int cord = 15;
   GLfloat x = -cord;
   GLfloat y = -cord;
   GLfloat z = -cord;
@@ -130,7 +130,7 @@ void Render::manualDraw(GLfloat size){
   for(int j = 0 ; j < 6; j++){
     z=-x;
     for(int k = 0; k < 6; k++){
-      doSquare(x, y, z, 1, 0, 1, 1, (j*6)+k, 1.1);
+      doSquare(x, y, z, 1, 0, 1, 1, (j*6)+k, 0.1);
       z = z+size/2;
     }
     y = y+size/2;
@@ -145,7 +145,7 @@ void Render::manualDraw(GLfloat size){
     z=-y;
     for(int k = 0; k < 6; k++){
 
-      doSquare(x, y, z, 1, 1, 0, 2, (j*6)+k, 3.1);
+      doSquare(x, y, z, 1, 1, 0, 2, (j*6)+k, 2.1);
       z = z+size/2;
     }
     x = x+size/2;
@@ -169,7 +169,7 @@ void Render::manualDraw(GLfloat size){
   for(int j = 0 ; j < 6; j++){
     y=-z;
     for(int k = 0; k < 6; k++){
-      doSquare(x, y, z, 0, 1, 1, 4, (j*6)+k, 5.5);
+      doSquare(x, y, z, 0, 1, 1, 4, (j*6)+k, 4.5);
       y = y+size/2;
     }
     x = x+size/2;

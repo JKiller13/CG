@@ -197,7 +197,7 @@ void timer(int) {
 		int a = random(1, 3);
 		int b = 3*random(1, 6);
 		printf("a%d b%d\n",a, b );
-		//render.outCubeRotation(a, b);
+		render.outCubeRotation(a, b);
 	}
 	rotate+=1;
 	glutPostRedisplay();
@@ -365,8 +365,7 @@ void keyboard(unsigned char key, int x, int y){
 		glutPostRedisplay();
 		break;
 
-	//Cube rotation
-		case 'q':
+	case 'q':
 		posC[1] +=cube;
 		if(posC[1]>18-cube*2)posC[1]=18-cube*2;
 		else{cubeMove(1);}
@@ -374,7 +373,7 @@ void keyboard(unsigned char key, int x, int y){
 
 		case 'w':
 		posC[1] -=cube;
-		if(posC[1]<-18+cube)posC[1]=-18+cube;
+		if(posC[1]<-18+cube*2)posC[1]=-18+cube*2;
 		else{cubeMove(2);}
 		break;
 
@@ -386,7 +385,7 @@ void keyboard(unsigned char key, int x, int y){
 
 		case 's':
 		posC[0] -=cube;
-		if(posC[0]<-18+cube){posC[0]=-18+cube;}
+		if(posC[0]<-18+cube*2){posC[0]=-18+cube*2;}
 		else{cubeMove(4);}
 		break;
 
@@ -398,7 +397,7 @@ void keyboard(unsigned char key, int x, int y){
 
 		case 'z':
 		posC[2] -=cube; 
-		if(posC[2]<-18+cube)posC[2]=-18+cube;
+		if(posC[2]<-18+cube*2)posC[2]=-18+cube*2;
 		else{cubeMove(6);}
 		break;
 
