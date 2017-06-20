@@ -34,7 +34,12 @@ public:
   bool rejected = false;
   GLfloat size = 3;////meter global
   GLfloat x = 15, y = 0, z = 0;
+  GLfloat cx = 1, cy = 1, cz = 1, t=1;  
+  GLfloat angX = 0, angY = 0, angZ = 0;
+
+
   int textn;
+  bool exterior = false;
   GLfloat cubeside = 0;
   GLfloat faceside = 0;
   int texturesn = 7;
@@ -47,6 +52,7 @@ public:
   void draw();
   void cubeMove(int side);
   void loadTexture(char path[], int pos, GLuint textures[]);
+  void drawOneFace();
 };
 
 #endif

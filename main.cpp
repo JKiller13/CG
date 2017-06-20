@@ -23,12 +23,14 @@
 #define GRAY    0.2, 0.2, 0.2, 1.0
 #define PI		 3.14159
 
+
 //------------------------------------------------------------ Sistema Coordenadas + objectos
 GLfloat  xC=16.0, yC = 16.0, zC=15.0;
 GLint    wScreen=600, hScreen=500;
 
 GLfloat cube=3.0;
 
+int rotate=20 ;
 
 GLfloat draw_interval = 75;
 
@@ -47,7 +49,7 @@ int cubeside =0;
 
 //------------------------------------------------------------ Observador
 GLfloat  rVisao=5*cube, aVisao=0.5*PI;
-GLfloat  obsP[] ={rVisao*cos(aVisao),rVisao*cos(aVisao), rVisao*sin(aVisao)};
+GLfloat  obsP[] ={rVisao*cos(aVisao)+20,rVisao*cos(aVisao), 20+rVisao*sin(aVisao)};
 
 GLfloat  angZoom=90;
 GLfloat  incZoom=3;
@@ -90,41 +92,6 @@ void desenhaTexto(char *string) {
 	glRasterPos2f(-20, 35);
 	while (*string)
 		glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, *string++);
-}
-
-/*void calcInsert(){
-
-	if(square.x == (posC[0]+1.5*cube)){
-		sizeprincipal[0][]
-		if(square.y == (posC[1]+1.5*cube)){
-			sizeprincipal[0][]
-		}
-	}
-
-
-}*/
-
-
-int randomtexture(GLfloat color){
-
-	if(color < 1){
-		return 0;
-	}
-	else if(color < 2){
-		return 1;
-	}
-	else if(color < 3){
-		return 2;
-	}
-	else if(color < 4){
-		return 3;
-	}
-	else if(color < 5){
-		return 4;
-	}
-	else if(color < 6){
-		return 5;
-	}
 }
 
 
@@ -198,26 +165,6 @@ void newSquare(){//pos random de novo cubo
 }
 
 void CubeRotation(int side){
-	/*GLfloat ang, x = 0, y = 0, z = 0;
-	if(side == 1){//torno z
-		z = 1;
-		ang = 90;
-	}
-	else if(side == 2){//torno z
-		z = 1;
-		ang = -90;
-	
-	}
-	else if(side == 3){//torno y
-		y = 1;
-		ang = 90;	
-	}
-	else {//torno y
-		y = 1;
-		ang = -90;
-	
-	}*/
-
 	for(int i = 0; i < nsquares-1; i++){
 		allsquares[i].rotation(side, posC[0], posC[1], posC[2]);
 	}
@@ -244,9 +191,20 @@ void update(){
 
 void timer(int) {
 	update();
+	printf("ya\n");
+	if (rotate == 20)
+	{
+		rotate = 0;
+		int a = random(1, 3);
+		int b = 3*random(1, 6);
+		printf("a%d b%d\n",a, b );
+		render.outCubeRotation(a, b);
+	}
+	rotate+=1;
 	glutPostRedisplay();
 	glutTimerFunc(draw_interval, timer, 0);
 }
+
 
 void initLights(){		
 	if(night){		
@@ -308,8 +266,7 @@ void display(void){
 	glEnable(GL_COLOR_MATERIAL);
 	render.drawSkybox(100);
 	render.drawInitial(cube, posC[0], posC[1], posC[2]);
-	render.manualDraw(12);
-
+	render.drawS();
 	if(nsquares == 0 ){
 		newSquare();
 		nsquares++;
@@ -358,6 +315,8 @@ void init(void) {
 	for(int i= 0; i < square.texturesn; i++){
         square.loadTexture(square.tpath[i], i, square.textures);//aqui maybe not
     }
+   	render.manualDraw(12);
+
 	glEnable(GL_NORMALIZE);
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -385,6 +344,20 @@ void keyboard(unsigned char key, int x, int y){
 		angZoom=angZoom-incZoom;
 		if (angZoom<10)
 			angZoom=10;
+		glutPostRedisplay();
+		break;
+	//--------------------------- Zoom
+		case '/':
+		obsP[0]+=2;
+		if (obsP[0]>300)
+			obsP[0]=300;
+		glutPostRedisplay();
+		break;
+	//--------------------------- Zoom
+		case '*':
+		obsP[0]-=2;
+		if (obsP[0]>300)
+			obsP[0]=300;
 		glutPostRedisplay();
 		break;
 
@@ -493,6 +466,7 @@ int main(int argc, char** argv){
 	glutDisplayFunc(display); 
 	glutKeyboardFunc(keyboard);
 	glutTimerFunc(draw_interval, timer, 0);
+
 	glutMainLoop();
 	
 	return 0;

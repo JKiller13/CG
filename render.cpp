@@ -1,4 +1,6 @@
 #include "render.hpp"
+#include "square.hpp"
+
 #include <stdio.h>
 #include <math.h>
 
@@ -7,12 +9,17 @@ Render::Render(){}
 
 Render::~Render(){}
 
+GLfloat randomm(int minimo, int maximo){ 
+  GLfloat y;
+  y = rand()%1000;
+  return (minimo+ 0.001*y*(maximo-minimo));
+}
+
 
 void Render::quadrado(GLfloat size, GLfloat x, GLfloat y, GLfloat z, int t){
   glPushMatrix();
-  glColor4f(1, 1, 0, 1);
-  glRotatef(45, 1, 0, 0);
-  glRotatef(45, 0, 1, 0);
+  glColor4f(randomm(0,1), randomm(0,1), randomm(0,1), 1);
+
   glTranslatef(x,y,z);
   if( t ==1){
     glBegin(GL_QUADS);
@@ -67,79 +74,111 @@ void Render::quadrado(GLfloat size, GLfloat x, GLfloat y, GLfloat z, int t){
   glPopMatrix();
 }
 
+void drawCannon(GLfloat x, GLfloat y, GLfloat z){
+
+ // quadrado(3, x, y, z);
+
+}
 
 
+void Render::doSquare(GLfloat x, GLfloat y, GLfloat z, GLfloat cx, GLfloat cy, GLfloat cz, int side, int pos, int face){
+
+      outSquare[side][pos].x = x;
+      outSquare[side][pos].y = y;
+      outSquare[side][pos].z = z;
+      outSquare[side][pos].cx = cx;
+      outSquare[side][pos].cy = cy;
+      outSquare[side][pos].cz = cz;
+      outSquare[side][pos].size = 6;
+      outSquare[side][pos].exterior = true;
+      outSquare[side][pos].t = 0.5;
+      outSquare[side][pos].cubeside = face;
+
+      outSquare[side][pos].drawOneFace();
+
+}
 
 
 void Render::manualDraw(GLfloat size){
+
   //left
-  GLfloat x = -size/2*3;
-  GLfloat y = -size/2*3;
-  GLfloat z = -size/2*3;
-  for(int j = 0 ; j < 6; j++){
+  int i =0;
+  int cord = 18;
+  GLfloat x = -cord;
+  GLfloat y = -cord;
+  GLfloat z = -cord;
+
+  printf("x %f y%f z%f\n", x, y, x+size/2);
+  for(int j = 0 ; j < 6; j++){//red
     z=x;
     for(int k = 0; k < 6; k++){
-      quadrado(size, x, y, z, 1 );
+      doSquare(x, y, z, 1, 0, 0, 0, (j*6)+k, 1.1);
       z = z+size/2;
     }
     y = y+size/2;
   }
-    //dir
-  x = size/2*3;
-  y = -size/2*3;
-  z = -size/2*3;
+
+ // drawCannon();
+    //dir2
+  x = cord;
+  y = -cord;
+  z = -cord;
   for(int j = 0 ; j < 6; j++){
     z=-x;
     for(int k = 0; k < 6; k++){
-      quadrado(size, x, y, z, 4);
+      doSquare(x, y, z, 1, 0, 1, 1, (j*6)+k, 1.1);
       z = z+size/2;
     }
     y = y+size/2;
 
   }
-  x = -size/2*3;
-  y = +size/2*3;
-  z = -size/2*3;
+  x = -cord;
+  y = +cord;
+  z = -cord;
+  
+
   for(int j = 0 ; j < 6; j++){
     z=-y;
     for(int k = 0; k < 6; k++){
-      quadrado(size, x, y, z, 2);
+
+      doSquare(x, y, z, 1, 1, 0, 2, (j*6)+k, 3.1);
       z = z+size/2;
     }
     x = x+size/2;
 
   }
-  x = -size/2*3;
-  y = -size/2*3;
-  z = -size/2*3;
+  x = -cord;
+  y= -cord;
+  z = -cord;
   for(int j = 0 ; j < 6; j++){
     z=y;
     for(int k = 0; k < 6; k++){
-      quadrado(size, x, y, z, 5);
+      doSquare(x, y, z, 0, 1, 0, 3, (j*6)+k, 3.4);
       z = z+size/2;
     }
     x = x+size/2;
 
   }
-  x = -size/2*3;
-  y = -size/2*3;
-  z = +size/2*3;
+  x = -cord;
+  y = -cord;
+  z = +cord;
   for(int j = 0 ; j < 6; j++){
     y=-z;
     for(int k = 0; k < 6; k++){
-      quadrado(size, x, y, z, 6);
+      doSquare(x, y, z, 0, 1, 1, 4, (j*6)+k, 5.5);
       y = y+size/2;
     }
     x = x+size/2;
   }
 
-  x = -size/2*3;
-  y = -size/2*3;
-  z = -size/2*3;
+  x = -cord;
+  y = -cord;
+  z = -cord;
   for(int j = 0 ; j < 6; j++){
     y=z;
+
     for(int k = 0; k < 6; k++){
-      quadrado(size, x, y, z, 3);
+      doSquare(x, y, z, 0, 0, 1, 5, (j*6)+k, 5.6);
       y = y+size/2;
     }
     x = x+size/2;
@@ -148,8 +187,67 @@ void Render::manualDraw(GLfloat size){
 
 
 }
+void Render::drawS(){
+    int limit = 6*6;
+
+  for(int i = 0; i < 6; i++){
+    for(int j = 0; j < limit; j++){
+            outSquare[i][j].drawOneFace();
+
+
+    }
+  }
+}
+
+void Render::outCubeRotation(int axe, int h){
+  int limit = 6*6;
+  for(int i = 0; i < 6; i++){
+    for(int j = 0; j < limit; j++){
+        if(axe == 1){
+          if(outSquare[i][j].x == h){
+  printf("esta\n");
+            outSquare[i][j].rotation(1, 0,0,0);
+          }
+        }
+        else if(axe == 2){
+          if(outSquare[i][j].y == h){
+            outSquare[i][j].rotation(3, 0,0,0);
+          }
+        }
+        else{
+          if(outSquare[i][j].z == h){
+            outSquare[i][j].rotation(5, 0,0,0);
+          }
+        }
+    }
+  }
+
+}
 
 void Render::drawInitial(GLfloat cube, GLfloat x, GLfloat y, GLfloat z){
+ /*
+GLfloat xC = 16;
+    glColor4f(AZUL);
+  glBegin(GL_LINES);            
+    glVertex3i(0,0,-xC); 
+    glVertex3i(0,0, xC);    
+  glEnd();
+
+    //Eixo dos yy
+  glColor4f(VERDE);
+  glBegin(GL_LINES);            
+    glVertex3i(0,-xC,0); 
+    glVertex3i(0,xC,0);     
+  glEnd();
+  
+  //Eixo dos xx
+  glColor4f(VERMELHO);
+  glBegin(GL_LINES);            
+    glVertex3i(-xC,0,0); 
+    glVertex3i( xC,0,0);    
+  glEnd();
+*/
+
   glEnable(GL_TEXTURE_2D);
   glBindTexture(GL_TEXTURE_2D,textures[0]);
   glPushMatrix();
@@ -322,3 +420,5 @@ void loadTexture(char path[], int pos, GLuint textures[]){
   imag.LoadBmpFile(path); 
   glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, (int)imag.GetNumCols(), (int)imag.GetNumRows(), 0, GL_RGB, GL_UNSIGNED_BYTE, imag.ImageData());
 }
+
+

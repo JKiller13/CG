@@ -6,6 +6,7 @@
 #endif
 
 #include "RgbImage.h"
+#include "square.hpp"
 
 
 #define AZUL     0.0, 0.0, 1.0, 1.0
@@ -30,12 +31,15 @@ public:
 	~Render();
 	GLuint textures[8];
 	GLuint skyboxtex[5];
-  
+  	Square outSquare[6][6*6];
 	void drawBlend();
 	void loadAllTextures();
   	void drawSkybox(int d);
+  	void drawS();
   	void manualDraw(GLfloat size);
   	void drawInitial(GLfloat cube, GLfloat x, GLfloat y, GLfloat z);
   	void quadrado(GLfloat size, GLfloat x, GLfloat y, GLfloat z, int text);
+  	void doSquare(GLfloat x, GLfloat y, GLfloat z, GLfloat cx, GLfloat cy, GLfloat cz, int side, int pos, int face);
+	void outCubeRotation(int axe, int h);
 };
 

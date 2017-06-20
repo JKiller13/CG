@@ -112,19 +112,17 @@ void Square::cubeMove(int side){
 
 void Square::rotation(int side, GLfloat posCubeX, GLfloat posCubeY, GLfloat posCubeZ){
     GLfloat aux;
+    printf("rot %d\n", side);
     if(side == 1){//torno z
        GLfloat coss = 0;
        GLfloat sen = 1;
-
-        printf("posx %f\nposy %f\nposz %f\n",posCubeX, posCubeY, posCubeZ );
-               printf("int x %f\ny %f\nz %f\n\n\n\n\n",x, y, z );
+        printf("z %f\ny %f\n",z, y );
 
         aux =  (y+ posCubeY) *coss - (z- posCubeZ)*sen;
         z =  posCubeZ + (y- posCubeY)*sen + (z- posCubeZ)*coss;
         y = aux +posCubeY;
+        printf("z %f\ny %f\n",z, y );
 
-        
-        printf("x %f\ny %f\nz %f\n\n\n\n\n",x, y, z );
         if(cubeside < 1){
             cubeside = 0.9;//dir
         }
@@ -203,7 +201,7 @@ void Square::rotation(int side, GLfloat posCubeX, GLfloat posCubeY, GLfloat posC
             cubeside = 0.9;//dir
         }
     }
-    else {//torno y
+    else if(side == 4){//torno y
 
        GLfloat coss = 0;
        GLfloat sen = 1;
@@ -229,8 +227,124 @@ void Square::rotation(int side, GLfloat posCubeX, GLfloat posCubeY, GLfloat posC
         else {
             cubeside = 3.9;//esq
         } 
-    }    
+    }  
+        else if(side == 5){//torno y
 
+       GLfloat coss = 0;
+       GLfloat sen = -1;
+
+        aux =  ( posCubeX -x )*coss - ( posCubeY -y )*sen;
+        y =  posCubeY+ ( posCubeX -x )*sen + ( posCubeY -y )*coss;
+        x = aux + posCubeX;
+        if(cubeside < 1){
+            cubeside = 5.9;//tras
+        }
+        else if(cubeside < 2){
+            cubeside = 1.9;//cima
+        }
+        else if(cubeside < 3){
+            cubeside = 0.9;//dir
+        } 
+        else if(cubeside < 4){
+            cubeside = 2.9;//frente
+        }
+        else if(cubeside < 5){
+            cubeside = 4.9;//baixo
+        }
+        else {
+            cubeside = 3.9;//esq
+        } 
+    }
+        else if(side == 6){//torno y
+
+       GLfloat coss = 0;
+       GLfloat sen = 1;
+
+        aux =  ( posCubeX -x )*coss - ( posCubeY -y )*sen;
+        y =  posCubeY+ ( posCubeX -x )*sen + ( posCubeY -y )*coss;
+        x = aux + posCubeX;
+        if(cubeside < 1){
+            cubeside = 5.9;//tras
+        }
+        else if(cubeside < 2){
+            cubeside = 1.9;//cima
+        }
+        else if(cubeside < 3){
+            cubeside = 0.9;//dir
+        } 
+        else if(cubeside < 4){
+            cubeside = 2.9;//frente
+        }
+        else if(cubeside < 5){
+            cubeside = 4.9;//baixo
+        }
+        else {
+            cubeside = 3.9;//esq
+        } 
+    }  
+
+}
+void Square::drawOneFace(){
+    glEnable(GL_TEXTURE_2D);
+    glPushMatrix();
+    glColor4f(cx, cy, cz, t);
+    glTranslatef(x,y,z);
+    if (cubeside < 1){
+        glBindTexture(GL_TEXTURE_2D,textures[1]);
+        glBegin(GL_QUADS);
+        glTexCoord2f(0.0f,0.0f); glVertex3f(size/2, size/2, -size/2);
+        glTexCoord2f(1.0f,0.0f);glVertex3f(size/2, size/2, size/2);
+        glTexCoord2f(1.0f,1.0f);glVertex3f(size/2, -size/2, size/2);
+        glTexCoord2f(0.0f,1.0f); glVertex3f(size/2, -size/2, -size/2);
+        glEnd();
+    }
+    else if(cubeside < 2){
+        glBindTexture(GL_TEXTURE_2D,textures[textn]);
+        glBegin(GL_QUADS);//lado esq
+        glTexCoord2f(0.0f,0.0f); glVertex3f(-size/2, size/2, -size/2);
+        glTexCoord2f(1.0f,0.0f);glVertex3f(-size/2, size/2, size/2);
+        glTexCoord2f(1.0f,1.0f);glVertex3f(-size/2, -size/2, size/2);
+        glTexCoord2f(0.0f,1.0f);glVertex3f(-size/2, -size/2, -size/2);
+        glEnd();
+    }
+    else if(cubeside < 3){
+        glBindTexture(GL_TEXTURE_2D,textures[textn]);
+        glBegin(GL_QUADS);
+        glTexCoord2f(0.0f,0.0f);glVertex3f(size/2, size/2, -size/2);
+        glTexCoord2f(1.0f,0.0f);glVertex3f(-size/2, size/2, -size/2);
+        glTexCoord2f(1.0f,1.0f);glVertex3f(-size/2, size/2, size/2);
+        glTexCoord2f(0.0f,1.0f);glVertex3f(size/2, size/2, size/2);
+        glEnd();
+    }
+    else if(cubeside < 4){
+        glBindTexture(GL_TEXTURE_2D,textures[textn]);
+        glBegin(GL_QUADS);
+        glTexCoord2f(0.0f,0.0f);glVertex3f(size/2, -size/2, -size/2);
+        glTexCoord2f(1.0f,0.0f);glVertex3f(-size/2, -size/2, -size/2);
+        glTexCoord2f(1.0f,1.0f);glVertex3f(-size/2, -size/2, size/2);
+        glTexCoord2f(0.0f,1.0f);glVertex3f(size/2, -size/2, size/2);
+        glEnd();
+    }
+    else if(cubeside < 5){
+        glBindTexture(GL_TEXTURE_2D,textures[6]);
+        glBegin(GL_QUADS);
+        glTexCoord2f(0.0f,0.0f);glVertex3f(size/2, -size/2, size/2);
+        glTexCoord2f(1.0f,0.0f);glVertex3f(-size/2, -size/2, size/2);
+        glTexCoord2f(1.0f,1.0f);glVertex3f(-size/2, size/2, size/2);
+        glTexCoord2f(0.0f,1.0f);glVertex3f(size/2, size/2, size/2);
+        glEnd();
+    }
+    else if(cubeside < 6){
+        glBindTexture(GL_TEXTURE_2D,textures[6]);
+        glBegin(GL_QUADS);
+        glTexCoord2f(0.0f,0.0f);glVertex3f(size/2, -size/2, -size/2);
+        glTexCoord2f(1.0f,0.0f);glVertex3f(-size/2, -size/2, -size/2);
+        glTexCoord2f(1.0f,1.0f);glVertex3f(-size/2, size/2, -size/2);
+        glTexCoord2f(0.0f,1.0f);glVertex3f(size/2, size/2, -size/2);
+        glEnd();
+        
+    }
+    glPopMatrix();
 }
 
 void Square::draw(){
@@ -239,8 +353,9 @@ void Square::draw(){
     bool check = false;
     glEnable(GL_TEXTURE_2D);
     glPushMatrix();
-    glColor4f(1, 1, 1, 1);
+    glColor4f(cx, cy, cz, 1);
     glTranslatef(x,y,z);
+    
     if(cubeside < 1 && check !=true){//ok
         glBindTexture(GL_TEXTURE_2D,textures[textn]);
         glBegin(GL_QUADS);
